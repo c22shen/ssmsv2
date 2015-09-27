@@ -5,6 +5,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var http = require('http');
+var socketio = require('socket.io');
 
 var config = require('./config');
 var routes = require('./routes/index');
@@ -12,6 +14,11 @@ var routes = require('./routes/index');
 
 mongoose.connect(config.mongoUri);
 var app = express();
+
+server = http.createServer(app);
+io = socketio.listen(server);
+
+server.listen(3000);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

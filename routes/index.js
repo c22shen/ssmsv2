@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-
+var MachineService = require('../services/machine-service');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -10,50 +10,24 @@ router.get('/', function(req, res, next) {
 });
 
 
-router.route('/machines')
+router.route('/machines/:machine_id')
 
-// create a bear (accessed at POST http://localhost:8080/api/bears)
-.post(function(req, res) {
+// // get the bear with that id (accessed at GET http://localhost:8080/api/bears/:bear_id)
+// .get(function(req, res) {
+//     ...
+// })
 
-    var machine = new Machine(); // create a new instance of the Bear model
-    machine.status = req.body.status; // set the bears name (comes from the request)
-
-    // save the bear and check for errors
-    machine.save(function(err) {
-        if (err)
-            res.send(err);
-
-        res.json({
-            message: 'Bear created!'
-        });
-    });
-
-})
-
-// get all the bears (accessed at GET http://localhost:8080/api/bears)
-.get(function(req, res) {
-    Machine.find(function(err, machine) {
-        if (err)
-            res.send(err);
-
-        res.json(machine);
-    });
+// update the bear with this id (accessed at PUT http://localhost:8080/api/bears/:bear_id)
+.put(function(req, res) {
+	MachineService.updateMachineStatus(req, function(err){
+		if (err){
+			// res.send(err);
+			res.json({ message: 'Machine failed' });
+		} else {
+			res.json({ message: 'Machine updated!' });
+		}
+	})
 });
-
-// router.route('/machines/:bear_id')
-
-//     // get the bear with that id (accessed at GET http://localhost:8080/api/bears/:bear_id)
-//     .get(function(req, res) {
-//         Bear.findById(req.params.bear_id, function(err, bear) {
-//             if (err)
-//                 res.send(err);
-//             res.json(bear);
-//         });
-//     });
-
-
-
-
 
 
 module.exports = router;

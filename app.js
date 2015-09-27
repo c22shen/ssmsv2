@@ -18,7 +18,17 @@ var app = express();
 server = http.createServer(app);
 io = socketio.listen(server);
 
-server.listen(3000);
+server.listen(process.env.PORT || 3000);
+
+io.sockets.on('connection', function(socket){
+
+  socket.on('send msg', function(data){
+
+    io.sockets.emit('get msg', data);
+  });
+});
+
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

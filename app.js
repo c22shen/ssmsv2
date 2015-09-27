@@ -10,20 +10,24 @@ var socketio = require('socket.io');
 
 var config = require('./config');
 var routes = require('./routes/index');
-// var users = require('./routes/users');
 
 mongoose.connect(config.mongoUri);
 var app = express();
 
 server = http.createServer(app);
 io = socketio.listen(server);
-
+// require('.sockets')(io);
+routes(app, io);
 server.listen(process.env.PORT || 3000);
 
+
 io.sockets.on('connection', function(socket){
+  console.log("socketio connected");
+io.sockets.emit('get msg', "I GOT MESSAGE");
+  socket.on('updateMachineStatus', function(data){
 
-  socket.on('send msg', function(data){
-
+  // console.log("I GOT DATA");
+  // console.log(data);
     io.sockets.emit('get msg', data);
   });
 });
@@ -43,6 +47,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
+
 // app.use('/users', users);
 
 // catch 404 and forward to error handler

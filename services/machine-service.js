@@ -24,7 +24,7 @@ var verifyData = function(parsedDataArray) {
     var address = parsedDataArray[6].toString() + parsedDataArray[7].toString() + parsedDataArray[8].toString() + parsedDataArray[9].toString();
     var digitalMask = parsedDataArray[15].toString() + parsedDataArray[16].toString();
     var analogMask = parsedDataArray[17].toString();
-    var analogValue = parseInt(parsedDataArray[18]) * 256 + parseInt(parsedDataArray[19]);
+    var analogValue = parseInt(parsedDataArray[18], 16) * 256 + parseInt(parsedDataArray[19], 16);
     var valid = (digitalMask === "00") && (analogMask === "8");
     if (valid) {
         return {

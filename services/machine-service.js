@@ -56,7 +56,7 @@ exports.updateMachineStatus = function(io) {
                 }
                 io.sockets.emit("updateMachineStatus", {
                     machine_id: verifiedResult.machineId,
-                    current_value: verifiedResult.current_value
+                    current_value: verifiedResult.currentValue
                 });
                 return next.json({
                     message: 'Machine updated!'

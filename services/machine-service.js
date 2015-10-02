@@ -21,7 +21,7 @@ var verifyData = function(parsedDataArray) {
     // 17: Analog Mask - 8
     // 18: Analog Value 
     // 19: Analog Value 
-    var address = parsedDataArray[6].toString() + parsedDataArray[7].toString() + parsedDataArray[8].toString() + parsedDataArray[9].toString();
+    var address = parsedDataArray[7].toString() + parsedDataArray[8].toString() + parsedDataArray[9].toString() + parsedDataArray[10].toString();
     var digitalMask = parsedDataArray[15].toString() + parsedDataArray[16].toString();
     var analogMask = parsedDataArray[17].toString();
     var analogValue = parseInt(parsedDataArray[18], 16) * 256 + parseInt(parsedDataArray[19], 16);

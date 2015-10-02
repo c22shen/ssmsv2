@@ -11,6 +11,6 @@ module.exports = function(app, io) {
             title: 'Express'
         });
     });
-    app.put('/machines/:machine_id', MachineService.updateMachineStatus(io));
+    app.put('/machines', MachineService.updateMachineStatus(io));
 };
 

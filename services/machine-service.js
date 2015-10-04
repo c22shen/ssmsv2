@@ -41,6 +41,8 @@ var verifyData = function(parsedDataArray) {
 
 exports.updateMachineStatus = function(io) {
     return function(req, next) {
+        console.log("received:");
+        console.log(req.query.current_value);
         var current_value_parsed = req.query.current_value.split(":");
         var verifiedResult = verifyData(current_value_parsed); 
         if (verifiedResult.valid) {

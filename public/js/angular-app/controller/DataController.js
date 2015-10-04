@@ -5,19 +5,21 @@ angular
 
         $rootScope.statusArray = [];
 
-        $scope.labels1 = ["", "", "", "", ""];
+        $scope.chartops1 = {scaleBeginAtZero: true}
+        $scope.chartops2 = {scaleBeginAtZero: true}
+        $scope.labels1 = [];
         $scope.series1 = ['Lathes'];
         $scope.data1 = [
-            [10,10,10,10,10]
+            []
         ];
 
-        $scope.labels2 = ["", "", "", "", ""];
+        $scope.labels2 = [];
         $scope.series2 = ['Mill'];
         $scope.data2 = [
-            [10,10,10,10,10]
+            []
         ];
         socketio.on('updateMachineStatus', function(status) {
-            console.log(status);
+        	console.log(status);
             if (status.machine_id === "40b09a44") {
 
                 if ($scope.data1[0].length < 10) {

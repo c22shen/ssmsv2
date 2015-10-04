@@ -20,7 +20,8 @@ angular
         ];
         socketio.on('updateMachineStatus', function(status) {
         	console.log(status);
-            if (status.machine_id === "40b09a44") {
+            $rootScope.statusArray.push(status);
+            if (status.machine_id === "40ffb0ff9a44") {
 
                 if ($scope.data1[0].length < 10) {
                     $scope.labels1.push(new Date().toLocaleString().substr(new Date().toLocaleString().indexOf(",") + 1));
@@ -31,7 +32,7 @@ angular
                     $scope.data1[0].shift();
                     $scope.data1[0].push(status.current_value);
                 }
-            } else if (status.machine_id === "40ad72ce") {
+            } else if (status.machine_id === "40ffad72ffce") {
                 if ($scope.data2[0].length < 10) {
                     $scope.labels2.push(new Date().toLocaleString().substr(new Date().toLocaleString().indexOf(",") + 1));
                     $scope.data2[0].push(status.current_value);
@@ -44,3 +45,7 @@ angular
             }
         })
     }])
+// 40ffad72ffce
+// 40  ad72  ce
+// 40ffb0ff9a44
+// 40  b0  9a44

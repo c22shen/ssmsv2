@@ -41,11 +41,11 @@ var verifyData = function(parsedDataArray) {
 
 exports.updateMachineStatus = function(io) {
     return function(req, next) {
-        console.log("received:");
-        console.log(req.query.current_value);
+        // console.log("received:");
+        // console.log(req.query.current_value);
         var current_value_parsed = req.query.current_value.split(":");
         var verifiedResult = verifyData(current_value_parsed); 
-        if (verifiedResult.valid) {
+        // if (verifiedResult.valid) {
             var machine = new Machine({
                 machine_id: verifiedResult.machineId,
                 current_value: verifiedResult.currentValue
@@ -57,15 +57,15 @@ exports.updateMachineStatus = function(io) {
                     return next.send(err);
                 }
                 io.sockets.emit("updateMachineStatus", {
-                    machine_id: verifiedResult.machineId,
-                    current_value: verifiedResult.currentValue
+                    // machine_id: verifiedResult.machineId,
+                    current_value: req.query.current_value
                 });
                 return next.json({
                     message: 'Machine updated!'
                 });
             })
-        } else {
-        	return next.send("invalid data");
-        }
+        // } else {
+        // 	return next.send("invalid data");
+        // }
     }
 };

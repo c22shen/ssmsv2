@@ -55,10 +55,10 @@ exports.updateMachineStatus = function(io) {
             // machine.save(function(err) {
             //     if (err) {
             //         return next.send(err);
-                
+                current_value = parseInt(current_value_parsed[2].substring(0,1), 16) * 256 + parseInt(current_value_parsed[2].substring(1,2), 16);
 io.sockets.emit("updateMachineStatus", {
-                    // machine_id: verifiedResult.machineId,
-                    current_value: req.query.current_value
+                    machine_id: current_value_parsed[1],
+                    current_value: current_value
                 });
                 return next.json({
                     message: 'Machine updated!'

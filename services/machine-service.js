@@ -55,7 +55,9 @@ exports.updateMachineStatus = function(io) {
             // machine.save(function(err) {
             //     if (err) {
             //         return next.send(err);
+            console.log(current_value_parsed);
                 current_value = parseInt(current_value_parsed[2], 16) * 256 + parseInt(current_value_parsed[3], 16);
+                console.log(current_value);
 io.sockets.emit("updateMachineStatus", {
                     machine_id: current_value_parsed[1],
                     current_value: current_value

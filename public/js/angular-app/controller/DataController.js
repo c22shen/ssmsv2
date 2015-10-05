@@ -23,7 +23,7 @@ angular
             $rootScope.statusArray.push(status);
             if (status.machine_id === "40b09a44") {
 
-                if ($scope.data1[0].length < 10) {
+                if ($scope.data1[0].length < 1000) {
                     $scope.labels1.push(new Date().toLocaleString().substr(new Date().toLocaleString().indexOf(",") + 1));
                     $scope.data1[0].push(status.current_value);
                 } else {
@@ -33,7 +33,7 @@ angular
                     $scope.data1[0].push(status.current_value);
                 }
             } else if (status.machine_id === "40ad72ce") {
-                if ($scope.data2[0].length < 10) {
+                if ($scope.data2[0].length < 1000) {
                     $scope.labels2.push(new Date().toLocaleString().substr(new Date().toLocaleString().indexOf(",") + 1));
                     $scope.data2[0].push(status.current_value);
                 } else {

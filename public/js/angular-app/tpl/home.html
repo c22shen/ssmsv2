@@ -21,14 +21,22 @@
         <div class="col-sm-6">
         <h3> <span style="padding-right:3px; padding-bottom: 10px; display:inline-block;">
         	<img src="/images/machine1.svg" style="height:40px"alt="">
-        </span>Milling Machine</h3>
+        </span>TEST MACHINE I</h3> 
+        <h1>
+<span style="color:green" ng-if="status.machine_id==='40b09a44' && status.current_value >18.5">ON</span>
+        <span style="color:red" ng-if="status.machine_id==='40b09a44' && status.current_value <=18.5">OFF</span>
+        </h1>
             <canvas id="line" class="chart chart-line" chart-options="chartops1" chart-data="data1" chart-labels="labels1" chart-legend="false" chart-series="series1">
             </canvas>
         </div>
         <div class="col-sm-6">
         <h3> <span style="padding-right:3px; padding-bottom: 10px; display:inline-block;">
         	<img src="/images/machine2.svg" style="height:40px"alt="">
-        </span>Lathes Machine</h3>
+        </span>TEST MACHINE II</h3>
+        <h1>
+        <span style="color:green" ng-if="status.machine_id==='40ad72ce' && status.current_value >11.5">ON</span>
+        <span style="color:red" ng-if="status.machine_id==='40ad72ce' && status.current_value <=11.5">OFF</span>
+        </h1>
             <canvas id="line" class="chart chart-line" chart-options="chartops2" chart-data="data2" chart-labels="labels2" chart-legend="false" chart-series="series2">
             </canvas>
         </div>

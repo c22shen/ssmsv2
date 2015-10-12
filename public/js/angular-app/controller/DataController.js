@@ -20,6 +20,7 @@ angular
         ];
         socketio.on('updateMachineStatus', function(status) {
             $rootScope.statusArray.push(status);
+            $rootScope.status = status;
 
 
             if (status.machine_id === "40b09a44") {

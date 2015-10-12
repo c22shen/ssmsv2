@@ -20,7 +20,14 @@ angular
         ];
         socketio.on('updateMachineStatus', function(status) {
             $rootScope.statusArray.push(status);
+
+
             if (status.machine_id === "40b09a44") {
+                if (status.current_value<=18.5) {
+                    status.current_value = 0;
+                } else {
+                    status.current_value = 100;
+                }
 
                 if ($scope.data1[0].length < 25) {
                     // $scope.labels1.push(new Date().toLocaleString().substr(new Date().toLocaleString().indexOf(",") + 1));
@@ -34,6 +41,11 @@ angular
                     $scope.data1[0].push(status.current_value);
                 }
             } else if (status.machine_id === "40ad72ce") {
+                if (status.current_value<=11.5) {
+                    status.current_value = 0;
+                } else {
+                    status.current_value = 100;
+                }
                 if ($scope.data2[0].length < 25) {
                     $scope.labels2.push("");
                     // $scope.labels2.push(new Date().toLocaleString().substr(new Date().toLocaleString().indexOf(",") + 1));

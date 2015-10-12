@@ -1,5 +1,9 @@
 angular
-    .module('app')
+    .module('myChart', [])
+    .factory('d3', function() {
+    	return d3;
+    })
+
     .directive('myscatterChart', ["d3", 
     	function(d3){
     		return {

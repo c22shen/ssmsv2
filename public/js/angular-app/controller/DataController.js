@@ -23,7 +23,8 @@ angular
 
 
             if (status.machine_id === "40b09a44") {
-                if (status.current_value<=18.5) {
+                //18.5
+                if (status.current_value<=15) {
                     status.current_value = 0;
                 } else {
                     status.current_value = 100;
@@ -41,7 +42,8 @@ angular
                     $scope.data1[0].push(status.current_value);
                 }
             } else if (status.machine_id === "40ad72ce") {
-                if (status.current_value<=11.5) {
+                //11.5
+                if (status.current_value<=8) {
                     status.current_value = 0;
                 } else {
                     status.current_value = 100;

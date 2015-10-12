@@ -24,11 +24,11 @@ angular
 
             if (status.machine_id === "40b09a44") {
                 //18.5
-                if (status.current_value<=15) {
-                    status.current_value = 0;
-                } else {
-                    status.current_value = 100;
-                }
+                // if (status.current_value<=15) {
+                //     status.current_value = 0;
+                // } else {
+                //     status.current_value = 100;
+                // }
 
                 if ($scope.data1[0].length < 25) {
                     // $scope.labels1.push(new Date().toLocaleString().substr(new Date().toLocaleString().indexOf(",") + 1));
@@ -43,11 +43,11 @@ angular
                 }
             } else if (status.machine_id === "40ad72ce") {
                 //11.5
-                if (status.current_value<=8) {
-                    status.current_value = 0;
-                } else {
-                    status.current_value = 100;
-                }
+                // if (status.current_value<=8) {
+                //     status.current_value = 0;
+                // } else {
+                //     status.current_value = 100;
+                // }
                 if ($scope.data2[0].length < 25) {
                     $scope.labels2.push("");
                     // $scope.labels2.push(new Date().toLocaleString().substr(new Date().toLocaleString().indexOf(",") + 1));

@@ -27,10 +27,10 @@ angular
                 //18.5
                 if (status.current_value<=18.5) {
                     // status.current_value = 0;
-                    $rootScope.machine1Status = true;
+                    $rootScope.machine1Status = false;
                 } else {
                     // status.current_value = 100;
-                    $rootScope.machine1Status = false;
+                    $rootScope.machine1Status = true;
                 }
 
                 if ($scope.data1[0].length < 25) {

@@ -10,6 +10,7 @@ var socketio = require('socket.io');
 
 var config = require('./config');
 var routes = require('./routes/index');
+var status = require('./routes/status');
 
 mongoose.connect(config.mongoUri);
 var app = express();
@@ -48,7 +49,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 
-// app.use('/users', users);
+app.use('/status', status);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -39,38 +39,59 @@ var Machine = require('../models/machine').Machine;
 //     }
 // }
 
+
+// exports.storeMachineStatus = function() {
+
+//     return function(req, res, next) {
+//         console.log("***************START**************zs")
+//         console.log(req.body);
+//         console.log("**************END*****************");
+//         // console.log(req.body);
+//         var newMachineStatus = new Machine({
+//             machineId: req.body.machineId,
+//             status: req.body.status
+//         });
+
+//         newMachineStatus.save(function(err) {
+//             if (err) {
+//                 return next.send(err);
+
+//                 return next.json({
+//                     message: 'Machine updated!'
+//                 });
+
+//             }
+
+
+//         })
+//     }
+// }
+
 exports.updateMachineStatus = function(io) {
-    return function(req, next) {
-        // console.log("received:");
-        // console.log(req.query.current_value);
-        var current_value_parsed = req.query.current_value.split(":");
-        // var verifiedResult = verifyData(current_value_parsed); 
-        // if (verifiedResult.valid) {
-            // var machine = new Machine({
-            //     machine_id: verifiedResult.machineId,
-            //     current_value: verifiedResult.currentValue
+        return function(req, next) {
+            var current_value_parsed = req.query.current_value.split(":");
+
+            // Machine.where({ machine_id: 'machine1' }).findOne({}, {}, {
+            //     sort: {
+            //         'created': -1
+            //     }
+            // }, function(err, post) {
+            //     console.log(post);
             // });
+            current_value = parseInt(current_value_parsed[2], 16) * 256 + parseInt(current_value_parsed[3], 16);
+            io.sockets.emit("updateMachineStatus", {
+                machine_id: current_value_parsed[1],
+                current_value: current_value
+            });
+            return next.json({
+                message: 'Machine updated!'
+            });
 
+        }
 
-            // machine.save(function(err) {
-            //     if (err) {
-            //         return next.send(err);
-            console.log(current_value_parsed);
-                current_value = parseInt(current_value_parsed[2], 16) * 256 + parseInt(current_value_parsed[3], 16);
-                console.log(current_value);
-io.sockets.emit("updateMachineStatus", {
-                    machine_id: current_value_parsed[1],
-                    current_value: current_value
-                });
-                return next.json({
-                    message: 'Machine updated!'
-                });
-
-                }
-                
-            // })
+        // })
         // } else {
-        // 	return next.send("invalid data");
+        //  return next.send("invalid data");
         // }
     }
-// };
+    // };

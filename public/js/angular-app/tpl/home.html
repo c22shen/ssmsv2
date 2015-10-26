@@ -1,58 +1,30 @@
-<!-- <div class="container">
-    <div class="row">
-        <div class="col-sm-6" class="text-center">
-            <div class="card" style="background:#51BA66; padding: 40px 0px; margin:0 20px">
-                <img src="/images/machine1.svg" alt="" style="width:50%; display:block; margin: 0 auto;">
-                <h2 class="text-center">Mill Machine</h2>
-                <h3 class="text-center" style="color:green">ON</h3>
-            </div>
-        </div>
-        <div class="col-sm-6" class="text-center" style="background: #04AFC3">
-            <div class="card" style="background:#04AFC3; padding: 40px 0px; margin:0 20px">
-                <img src="/images/machine2.svg" alt="" style="width:50%; display:block; margin: 0 auto;">
-                <h2 class="text-center">Lathes Machine</h2>
-                <h3 class="text-center" style="color:red">OFF</h3>
-            </div>
-        </div>
-    </div>
-</div> -->
-
-
+<chart class="chart" style="height: 100%;" data="statusArray"></chart>
 <div class="container">
-<div>
-    <my-scatter-chart class="chart" data="[1, 2, 3]"></my-scatter-chart>    
-
-</div>
-
-    <div class="row">
+    <!-- Testing charts  -->
+    <div class="row" ng-hide="true">
         <div class="col-sm-6">
-        <h3> <span style="padding-right:3px; padding-bottom: 10px; display:inline-block;">
-        	<img src="/images/machine1.svg" style="height:40px"alt="">
-        </span>TEST MACHINE I</h3> 
-        <h1>
-<span style="color:green" ng-if="machine1Status">ON</span>
+            <h3> <span style="padding-right:3px; padding-bottom: 10px; display:inline-block;">
+            <img src="/images/machine1.svg" style="height:40px"alt="">
+        </span>TEST MACHINE I</h3>
+            <h1>
+        <span style="color:green" ng-if="machine1Status">ON</span>
         <span style="color:red" ng-if="!machine1Status">OFF</span>
         </h1>
             <canvas id="line" class="chart chart-line" chart-options="chartops1" chart-data="data1" chart-labels="labels1" chart-legend="false" chart-series="series1">
             </canvas>
         </div>
         <div class="col-sm-6">
-        <h3> <span style="padding-right:3px; padding-bottom: 10px; display:inline-block;">
-        	<img src="/images/machine2.svg" style="height:40px"alt="">
+            <h3> <span style="padding-right:3px; padding-bottom: 10px; display:inline-block;">
+            <img src="/images/machine2.svg" style="height:40px"alt="">
         </span>TEST MACHINE II</h3>
-        <h1>
+            <h1>
         <span style="color:green" ng-if="machine2Status">ON</span>
         <span style="color:red" ng-if="!machine2Status">OFF</span>
         </h1>
             <canvas id="line" class="chart chart-line" chart-options="chartops2" chart-data="data2" chart-labels="labels2" chart-legend="false" chart-series="series2">
             </canvas>
         </div>
-
         <div class="row">
-        	
         </div>
     </div>
 </div>
-<!-- <div ng-repeat="status in statusArray">
-    <p>{{status.current_value}}</p>
-</div> -->

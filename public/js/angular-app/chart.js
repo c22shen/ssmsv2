@@ -1,82 +1,96 @@
 angular
-    .module('myChart', [])
+    .module('chart', [])
     .factory('d3', function() {
-    	return d3;
+        return d3;
     })
 
-    .directive('myScatterChart', ["d3", 
-    	function(d3){
+.directive('chart', ["d3", "$rootScope", "$window",
+    function(d3, $rootScope, $window) {
+        function link(scope, el, attr) {
+            el = el[0];
+            var w, h;
+            var height = 500,
+                margin = 50;
+            var svg = d3.select(el).append('svg');
+            svg.style('background-color', 'rgb(0,0,0)');
+            svg.attr({
+                height: 500
+            });
+            var points = svg.append('g').attr('class', 'points').selectAll('g.point');
+            console.log("link points is", points);
+            var x = d3.scale.linear();
+            var y = d3.scale.linear();
+            var x_extent = d3.extent(scope.data, function(d, i) {
+                return d.x_pos;
+            });
+            x.domain(x_extent);
+            var y_max = d3.max(scope.data, function(d) {
+                return d.y_pos
+            });
+            y.domain([0, y_max]);
+            scope.$watch(function() {
+                w = el.clientWidth;
+                h = el.clientHeight;
+                return w + h;
+            }, resize);
 
-            var draw = function(svg, width, height, data){
-                var margin = 30;
+            function resize() {
+                console.log("Resize called");
+                svg.attr({
+                    width: w
+                });
+                x.range([margin, w - margin]);
+                y.range([height - margin, margin]);
+                update();
+            }
 
-                svg.select('.data')
-                .selectAll('circle').data(data)
-                .enter()
-                .append('circle');
+            scope.$watch('statusArray', update);
 
-                svg.select('.data')
-                .selectAll('circle').data(data)
-                .attr('r', 10)
-                .attr('cx', 50)
-                .attr('cy', 100);
+            var update = function() {
+                //update that point only
+                // console.log($rootScope.statusArray);
+                console.log("update called", scope.data);
+                if (!scope.data) {
+                    return;
+                }
+                points = points.data(scope.data);
+                console.log("update points", points);
+                
 
-                // var xScale = d3.time.scale()
-                //     .domain([
-                //             d3.min(data, function(d) {
-                //                 return d.time;
-                //             }),
-                //             d3.max(data, function(d){
-                //                 return d.time;
-                //             })
-                //         ])
-                //     .range([margin, width-margin]);
 
-                //     var xAxis = d3.svg.axis()
-                //         .scale(xScale)
-                //         .orient('top')
-                //         .tickFormat(d3.time.format('%S'));
 
-                //     var yScale = d3.time.scale()
-                //         .domain([0, d3.max(data, function(d) { return d.visitors;})])
-                //         .range([margin, height-margin]);
+                var circle = points.enter()
+                    .append('g')
+                    .attr('class', 'point');
 
-                //     var yAxis = d3.svg.axis()
-                //         .scale(yScale)
-                //         .orient('left')
-                //         .tickFormat(d3.format('f'));
+                circle.append('circle')
+                    .attr('r', 20)
+                    .attr('fill', function(d) {
+                        return d.status === true ? "red" : "green"
+                    });
 
-                //     svg.select('.x-axis')
-                //         .attr('transform', "translate(0, " + margin + ")")
-                //         .call(xAxis);
-                //     svg.select('.y-axis')
-                //         .attr('transform', "translate(0, " + margin + ")")
-                //         .call(yAxis);
+                points.attr('transform', function(d, i) {
+                    return 'translate(' + [x(d.x_pos), y(d.y_pos)] + ')';
+                }).attr('fill', function(d) {
+                    return d.status === true ? "red" : "green"
+                });
+                points.exit().remove();
 
-                svg
-                    .attr('width', width)
-                    .attr('height', height);
+
+
             };
 
-    		return {
-    			restrict: 'E',
-    			scope: {
-                    data: '='
-    			},
-    			compile: function(element, attrs, transclude) {
-    				var svg = d3.select(element[0]).append('svg');
-                    svg.append('g').attr('class', 'data');
-                    svg.append('g').attr('class', 'x-axis axis');
-                    svg.append('g').attr('class', 'y-axis axis');
-                    var width = 600, height = 300;
 
-    				return function(scope, element, attrs){
+        };
 
-                        scope.$watch('data', function(newVal, oldVal, scope){
-                            draw(svg, width, height, scope.data);
-                        }, true)
-                    };
-    			}
-    		};
 
-    	}]);
+        return {
+            link: link,
+            restrict: 'E',
+            scope: {
+                data: '='
+            }
+        };
+
+    }
+]);

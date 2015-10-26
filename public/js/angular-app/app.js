@@ -1,7 +1,7 @@
 'use strict';
 
 angular
-	.module('app', ['ui.router', 'ui.bootstrap', 'ngSanitize', 'ngCookies', 'chart.js', 'myChart']);
+	.module('app', ['ui.router', 'ui.bootstrap', 'ngSanitize', 'ngCookies', 'chart.js', 'chart']);
 	// .config(['$stateProvider', '$urlRouterProvider', function('$stateProvider', '$urlRouterProvider') {
 	// 	$urlRouterProvider.otherwise("/home");
 	// }]);

@@ -14,10 +14,9 @@ angular
             var svg = d3.select(el).append('svg');
             svg.style('background-color', 'rgb(0,0,0)');
             svg.attr({
-                height: 500
+                height: height
             });
             var points = svg.append('g').attr('class', 'points').selectAll('g.point');
-            console.log("link points is", points);
             var x = d3.scale.linear();
             var y = d3.scale.linear();
             var x_extent = d3.extent(scope.data, function(d, i) {
@@ -35,7 +34,6 @@ angular
             }, resize);
 
             function resize() {
-                console.log("Resize called");
                 svg.attr({
                     width: w
                 });
@@ -44,46 +42,31 @@ angular
                 update();
             }
 
-            scope.$watch('statusArray', update);
+            scope.$watch('data', function(newVal, oldVal) {
+                update();
+            }, true);
 
             var update = function() {
-                //update that point only
-                // console.log($rootScope.statusArray);
-                console.log("update called", scope.data);
                 if (!scope.data) {
                     return;
                 }
                 points = points.data(scope.data);
-                console.log("update points", points);
-                
-
-
 
                 var circle = points.enter()
                     .append('g')
                     .attr('class', 'point');
 
-                circle.append('circle')
-                    .attr('r', 20)
-                    .attr('fill', function(d) {
-                        return d.status === true ? "red" : "green"
-                    });
-
+                circle.append('circle').attr('r', 20);
                 points.attr('transform', function(d, i) {
                     return 'translate(' + [x(d.x_pos), y(d.y_pos)] + ')';
-                }).attr('fill', function(d) {
+                })
+
+                points.attr('fill', function(d) {
                     return d.status === true ? "red" : "green"
                 });
                 points.exit().remove();
-
-
-
             };
-
-
         };
-
-
         return {
             link: link,
             restrict: 'E',

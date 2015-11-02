@@ -1,4 +1,4 @@
 'use strict';
 
 angular
-	.module('app', ['ui.router', 'ui.bootstrap', 'ngSanitize', 'ngCookies', 'chart.js', 'chart']);
+	.module('app', ['ui.router', 'ui.bootstrap', 'ngSanitize', 'ngCookies', 'chart']);

@@ -7,67 +7,30 @@ angular
             $scope.$apply()
         })
 
+        function randomIntFromInterval(min, max) {
+            return Math.floor(Math.random() * (max - min + 1) + min);
+        }
+
         var initializeChartData = function() {
-            // should be retrieved from database
-            $rootScope.machineInfo = {
-                "id40b09a44": {
-                    x_pos: 5,
-                    y_pos: 5
-                },
-                "id40ad72ce": {
-                    x_pos: 100,
-                    y_pos: 100
-                },
-                "id40ad82ce": {
-                    x_pos: 200,
-                    y_pos: 200
-                }
-            };
-            $rootScope.statusArray = [{
-                machineId: "id40b09a44",
-                x_pos: 5,
-                y_pos: 5,
-                status: false
-            }, {
-                machineId: "id40ad72ce",
-                status: false,
-                x_pos: 100,
-                y_pos: 100
-            }, {
-                machineId: "id40ad82ce",
-                status: false,
-                x_pos: 200,
-                y_pos: 200
-            }];
-
+            // think about how to initialize
         }
 
-        //Testing
-        var initializeCurrentChart = function() {
-            $scope.chartops1 = {
-                scaleBeginAtZero: true
+        var createDataTest = function(numberOfTestData) {
+            $rootScope.statusArray = [];
+            var i;
+            for (i = 0; i < numberOfTestData; i++) {
+                var genMachineId = Math.random().toString(36).substring(7);
+                var genStatus = Math.random() >= 0.5;
+                var gen_x_pos = randomIntFromInterval(0, 200);
+                var gen_y_pos = randomIntFromInterval(0, 200);
+                var gen_status = {
+                    machineId: genMachineId,
+                    status: genStatus,
+                    x_pos: gen_x_pos,
+                    y_pos: gen_y_pos
+                };
+                $rootScope.statusArray.push(gen_status);
             }
-            $scope.chartops2 = {
-                scaleBeginAtZero: true
-            }
-            $scope.labels1 = [];
-            $scope.series1 = ['Lathes'];
-            $scope.data1 = [
-                []
-            ];
-            $scope.labels2 = [];
-            $scope.series2 = ['Mill'];
-            $scope.data2 = [
-                []
-            ];
-        }
-
-        //Testing
-        var showAllIncomingMsgs = function() {
-            $rootScope.statusArray.push(status);
-        }
-
-        var createDataTest = function() {
 
             var isMachineOn = function(current_reading, threshold) {
                     if (typeof current_reading !== 'number' || typeof threshold !== 'number') {
@@ -77,11 +40,22 @@ angular
                 }
                 // Testing 
             $interval(function() {
-                var machineIdList = Object.keys($rootScope.machineInfo);
+                var machineIdList = [];
+                $rootScope.statusArray.forEach(function(d) {
+                    machineIdList.push(d.machineId);
+                })
+
+
                 var machineId = machineIdList[Math.floor(Math.random() * machineIdList.length)];
                 var maximum_current_reading = 200,
                     minimum_current_reading = 5;
                 var currentValue = Math.floor(Math.random() * (maximum_current_reading - minimum_current_reading + 1)) + minimum_current_reading;
+
+                // socketio.emit('updateMachineStatus', {
+                //     machine_id: machineId,
+                //     current_value: currentValue
+                // });
+
                 var currentMachineStatus = $rootScope.statusArray.filter(function(d) {
                     return d.machineId === machineId
                 })[0].status;
@@ -99,9 +73,8 @@ angular
             }, 1000);
         }
 
-        initializeChartData();
-        initializeCurrentChart();
-        createDataTest();
+        // initializeChartData();
+        createDataTest(20);
 
 
         socketio.on('updateMachineStatus', function(status) {
@@ -119,41 +92,6 @@ angular
                         data.status = !currentMachineStatus
                     }
                 })
-            }
-            // Test charts
-
-            if (status.machine_id === "40b09a44") {
-
-                if (status.current_value <= 18.5) {
-                    $rootScope.machine1Status = false;
-                } else {
-                    $rootScope.machine1Status = true;
-                }
-
-                if ($scope.data1[0].length < 25) {
-                    $scope.labels1.push("");
-                    $scope.data1[0].push(status.current_value);
-                } else {
-                    $scope.labels1.shift();
-                    $scope.labels1.push("");
-                    $scope.data1[0].shift();
-                    $scope.data1[0].push(status.current_value);
-                }
-            } else if (status.machine_id === "40ad72ce") {
-                if (status.current_value <= 11.5) {
-                    $rootScope.machine2Status = false;
-                } else {
-                    $rootScope.machine2Status = true;
-                }
-                if ($scope.data2[0].length < 25) {
-                    $scope.labels2.push("");
-                    $scope.data2[0].push(status.current_value);
-                } else {
-                    $scope.labels2.shift();
-                    $scope.labels2.push("");
-                    $scope.data2[0].shift();
-                    $scope.data2[0].push(status.current_value);
-                }
             }
         })
     }])

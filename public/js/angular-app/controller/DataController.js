@@ -4,7 +4,7 @@ angular
         'use strict';
 
         angular.element($window).on('resize', function() {
-            $scope.$apply()
+            $scope.$apply();
         })
 
         function randomIntFromInterval(min, max) {
@@ -32,6 +32,24 @@ angular
                 $rootScope.statusArray.push(gen_status);
             }
 
+
+            var processData = function(machineId, currentValue, currentThreshold) {
+                var currentMachineStatus = $rootScope.statusArray.filter(function(d) {
+                    return d.machineId === machineId
+                })[0].status;
+
+                if (currentMachineStatus !== isMachineOn(currentValue, currentThreshold)) {
+                    // store data in dataBase
+
+                    $rootScope.statusArray.forEach(function(data) {
+                        if (data.machineId === machineId) {
+                            data.status = !currentMachineStatus
+                        }
+                    })
+                };
+
+            }
+
             var isMachineOn = function(current_reading, threshold) {
                     if (typeof current_reading !== 'number' || typeof threshold !== 'number') {
                         return false;
@@ -40,58 +58,21 @@ angular
                 }
                 // Testing 
             $interval(function() {
-                var machineIdList = [];
-                $rootScope.statusArray.forEach(function(d) {
-                    machineIdList.push(d.machineId);
-                })
-
-
-                var machineId = machineIdList[Math.floor(Math.random() * machineIdList.length)];
-                var maximum_current_reading = 200,
-                    minimum_current_reading = 5;
-                var currentValue = Math.floor(Math.random() * (maximum_current_reading - minimum_current_reading + 1)) + minimum_current_reading;
-
-                // socketio.emit('updateMachineStatus', {
-                //     machine_id: machineId,
-                //     current_value: currentValue
-                // });
-
-                var currentMachineStatus = $rootScope.statusArray.filter(function(d) {
-                    return d.machineId === machineId
-                })[0].status;
-
-                if (currentMachineStatus !== isMachineOn(currentValue, 100)) {
-                    // store data in dataBase
-                    // issues
-
-                    $rootScope.statusArray.forEach(function(data) {
-                        if (data.machineId === machineId) {
-                            data.status = !currentMachineStatus
-                        }
+                    var machineIdList = $rootScope.statusArray.map(function(d) {
+                        return d.machineId;
                     })
-                };
-            }, 1000);
+
+                    var machineId = machineIdList[Math.floor(Math.random() * machineIdList.length)];
+                    var maximum_current_reading = 200,
+                        minimum_current_reading = 5;
+                    var currentValue = Math.floor(Math.random() * (maximum_current_reading - minimum_current_reading + 1)) + minimum_current_reading;
+
+                    processData(machineId, currentValue, 100);
+                },
+                1000);
         }
-
-        // initializeChartData();
         createDataTest(20);
-
-
         socketio.on('updateMachineStatus', function(status) {
-
-            var currentMachineStatus = $rootScope.statusArray.filter(function(d) {
-                return d.machineId === status.machine_id
-            })[0].status;
-
-            if (currentMachineStatus !== isMachineOn(status.current_value, 100)) {
-                // store data in dataBase
-                // req.body is currently empty -> investigate
-
-                $rootScope.statusArray.forEach(function(data) {
-                    if (data.machineId === machineId) {
-                        data.status = !currentMachineStatus
-                    }
-                })
-            }
+            processData(status.machine_id, status.current_value, 100);
         })
     }])

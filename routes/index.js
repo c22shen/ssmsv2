@@ -8,11 +8,11 @@ module.exports = function(app, io) {
             title: 'Express'
         });
     });
-    app.save('/avada', function(req, res) {
-    	alert(req);
-        // res.render('index', {
-        //     title: 'Express'
-        // });
-    });
+    // app.save('/avada', function(req, res) {
+    // 	alert(req);
+    //     // res.render('index', {
+    //     //     title: 'Express'
+    //     // });
+    // });
     app.put('/machines', MachineService.updateMachineStatus(io));
 };

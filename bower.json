@@ -1,0 +1,29 @@
+{
+  "name": "ssmsv2",
+  "description": "",
+  "main": "",
+  "authors": [
+    "Xiao Shen <xiaoshen2009@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/c22shen/ssmsv2",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/bower",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-bootstrap": "~0.13.4",
+    "angular-chart.js": "~0.8.4",
+    "angular-sanitize": "~1.4.6",
+    "angular": "~1.4.6",
+    "angular-ui-router": "~0.2.15",
+    "angular-cookies": "~1.4.6",
+    "bootstrap": "~3.3.5",
+    "d3": "~3.5.6"
+  }
+}

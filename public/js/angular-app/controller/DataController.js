@@ -44,9 +44,6 @@ angular
                         status: !currentMachineStatus
                     }).
                     then(function(res) {
-                        // console.log("res");
-                        // console.log(res);
-
                         console.log("post successful");
 
                     }, function(res) {

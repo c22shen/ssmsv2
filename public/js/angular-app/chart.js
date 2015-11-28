@@ -12,7 +12,7 @@ angular
             var height = 500,
                 margin = 50;
             var svg = d3.select(el).append('svg');
-            svg.style('background-color', 'rgb(0,0,0)');
+            // svg.style('background-color', 'rgb(0,0,0)');
             svg.attr({
                 height: height
             });

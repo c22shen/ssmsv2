@@ -39,7 +39,19 @@ angular
                 })[0].status;
 
                 if (currentMachineStatus !== isMachineOn(currentValue, currentThreshold)) {
-                    // store data in dataBase
+                    $http.post('/machines/create', {
+                        machineId: machineId,
+                        status: !currentMachineStatus
+                    }).
+                    then(function(res) {
+                        // console.log("res");
+                        // console.log(res);
+
+                        console.log("post successful");
+
+                    }, function(res) {
+                        console.log("post failure");
+                    })
 
                     $rootScope.statusArray.forEach(function(data) {
                         if (data.machineId === machineId) {
@@ -69,7 +81,7 @@ angular
 
                     processData(machineId, currentValue, 100);
                 },
-                1000);
+                500);
         }
         createDataTest(20);
         socketio.on('updateMachineStatus', function(status) {

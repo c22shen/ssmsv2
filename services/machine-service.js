@@ -24,18 +24,20 @@ var Machine = require('../models/machine').Machine;
 // unused
 exports.storeMachineStatus = function() {
     return function(req, res, next) {
+        console.log("ASDASDASD");
+        console.log(req.body);
         var newMachineStatus = new Machine({
             machineId: req.body.machineId,
             status: req.body.status
         });
         newMachineStatus.save(function(err) {
             if (err) {
-                return next.send(err);
-
-                return next.json({
-                    message: 'Machine updated!'
-                });
+                return res.send(err);
             }
+
+            return res.json({
+                message: 'Machine updated!'
+            });
         })
     }
 }

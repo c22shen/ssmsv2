@@ -1,5 +1,5 @@
 var Machine = require('../models/machine').Machine;
-
+var Position = require('../models/position').Position;
 //     //  0:length
 //     //  1:length
 //     //  2: FrameType
@@ -21,11 +21,8 @@ var Machine = require('../models/machine').Machine;
 //     // 18: Analog Value 
 //     // 19: Analog Value 
 
-// unused
 exports.storeMachineStatus = function() {
     return function(req, res, next) {
-        console.log("ASDASDASD");
-        console.log(req.body);
         var newMachineStatus = new Machine({
             machineId: req.body.machineId,
             status: req.body.status
@@ -42,7 +39,7 @@ exports.storeMachineStatus = function() {
     }
 }
 
-exports.updateMachineStatus = function(io) {
+exports.updateMachineStatus = function() {
     return function(req, next) {
         var current_value_parsed = req.query.current_value.split(":");
         current_value = parseInt(current_value_parsed[2], 16) * 256 + parseInt(current_value_parsed[3], 16);
@@ -54,5 +51,36 @@ exports.updateMachineStatus = function(io) {
             message: 'Machine updated received'
         });
 
+    }
+}
+
+exports.storeMachinePosition = function() {
+    return function(req, res, next) {
+        var newMachinePosition = new Position({
+            machineId: req.body.machineId,
+            x_pos: req.body.x_pos,
+            y_pos: req.body.y_pos
+        });
+        newMachinePosition.save(function(err) {
+            if (err) {
+                return res.send(err);
+            }
+
+            return res.json({
+                message: 'Machine Position updated!'
+            });
+        })
+    }
+}
+
+exports.getMachinePositions = function() {
+    return function(req, res, next) {
+        Position.find({}, function(err, positions) {
+            if (err) {
+                return next(err);
+            } else {
+                return res.json(positions);
+            }
+        })
     }
 }

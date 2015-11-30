@@ -18,7 +18,6 @@ var app = express();
 
 server = http.createServer(app);
 io = socketio.listen(server);
-// require('.sockets')(io);
 // routes(app, io);
 server.listen(process.env.PORT || 3000);
 

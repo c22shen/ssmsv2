@@ -12,12 +12,14 @@ angular
             }).
             then(function(res) {
                 $rootScope.statusArray = res.data;
+                $rootScope.statusArray.forEach(function(d){d.status? null: d.status=false});
             }, function(res) {})
         }
         initializeStatusData();
 
 
-        var processData = function(machineId, currentValue, currentThresholdInMSec, currentThreshold) {
+        var processData = function(machineId, currentValue, currentThreshold) {
+            var currentMachineStatus;
             var isMachineOn = function(current_reading, threshold) {
                 if (typeof current_reading !== 'number' || typeof threshold !== 'number') {
                     return false;
@@ -28,9 +30,8 @@ angular
                 return d.machineId === machineId
             });
             if (machineDataArray.length != 0) {
-                var currentMachineStatus = machineDataArray[0].status;
+                currentMachineStatus = machineDataArray[0].status;
             }
-
             if (currentMachineStatus !== isMachineOn(currentValue, currentThreshold)) {
                 $http.post('/machines/create', {
                     machineId: machineId,
@@ -87,6 +88,6 @@ angular
         }
         // createDataTest(2, 2000, 100);
         socketio.on('updateMachineStatus', function(status) {
-            processData(status.machine_id, status.current_value, 100);
+            processData(status.machine_id, status.current_value, 10);
         })
     }])

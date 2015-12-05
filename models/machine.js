@@ -2,8 +2,8 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var machineschema = new Schema({
-	machine_id: String,
-	current_value: String,
+	machineId: String,
+	status: Boolean,
 	created: {
 		type: Date,
 		default: Date.now

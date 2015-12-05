@@ -2,21 +2,57 @@ angular
     .module('app')
     .controller("DataController", ['$rootScope', '$scope', 'socketio', '$interval', '$http', '$window', function($rootScope, $scope, socketio, $interval, $http, $window) {
         'use strict';
-
+        $rootScope.statusArray = [];
         angular.element($window).on('resize', function() {
             $scope.$apply();
         })
 
-        function randomIntFromInterval(min, max) {
-            return Math.floor(Math.random() * (max - min + 1) + min);
+        var initializeStatusData = function() {
+            $http.get('/machines/positions', {
+            }).
+            then(function(res) {
+                $rootScope.statusArray = res.data;
+            }, function(res) {})
+        }
+        initializeStatusData();
+
+
+        var processData = function(machineId, currentValue, currentThresholdInMSec, currentThreshold) {
+            var isMachineOn = function(current_reading, threshold) {
+                if (typeof current_reading !== 'number' || typeof threshold !== 'number') {
+                    return false;
+                }
+                return current_reading > threshold ? true : false;
+            }
+            var machineDataArray = $rootScope.statusArray.filter(function(d) {
+                return d.machineId === machineId
+            });
+            if (machineDataArray.length != 0) {
+                var currentMachineStatus = machineDataArray[0].status;
+            }
+
+            if (currentMachineStatus !== isMachineOn(currentValue, currentThreshold)) {
+                $http.post('/machines/create', {
+                    machineId: machineId,
+                    status: !currentMachineStatus
+                }).
+                then(function(res) {}, function(res) {})
+
+                $rootScope.statusArray.forEach(function(data) {
+                    if (data.machineId === machineId) {
+                        data.status = !currentMachineStatus
+                    }
+                })
+            };
+
         }
 
-        var initializeChartData = function() {
-            // think about how to initialize
-        }
 
-        var createDataTest = function(numberOfTestData) {
-            $rootScope.statusArray = [];
+        var createDataTest = function(numberOfTestData, updateIntervalMsec, currentThreshold) {
+            function randomIntFromInterval(min, max) {
+                return Math.floor(Math.random() * (max - min + 1) + min);
+            }
+
             var i;
             for (i = 0; i < numberOfTestData; i++) {
                 var genMachineId = Math.random().toString(36).substring(7);
@@ -31,32 +67,7 @@ angular
                 };
                 $rootScope.statusArray.push(gen_status);
             }
-
-
-            var processData = function(machineId, currentValue, currentThreshold) {
-                var currentMachineStatus = $rootScope.statusArray.filter(function(d) {
-                    return d.machineId === machineId
-                })[0].status;
-
-                if (currentMachineStatus !== isMachineOn(currentValue, currentThreshold)) {
-                    // store data in dataBase
-
-                    $rootScope.statusArray.forEach(function(data) {
-                        if (data.machineId === machineId) {
-                            data.status = !currentMachineStatus
-                        }
-                    })
-                };
-
-            }
-
-            var isMachineOn = function(current_reading, threshold) {
-                    if (typeof current_reading !== 'number' || typeof threshold !== 'number') {
-                        return false;
-                    }
-                    return current_reading > threshold ? true : false;
-                }
-                // Testing 
+            // Testing 
             $interval(function() {
                     var machineIdList = $rootScope.statusArray.map(function(d) {
                         return d.machineId;
@@ -66,12 +77,15 @@ angular
                     var maximum_current_reading = 200,
                         minimum_current_reading = 5;
                     var currentValue = Math.floor(Math.random() * (maximum_current_reading - minimum_current_reading + 1)) + minimum_current_reading;
-
-                    processData(machineId, currentValue, 100);
+                    $rootScope.newestData = {
+                        machineId: machineId,
+                        currentValue: currentValue
+                    };
+                    processData(machineId, currentValue, currentThreshold);
                 },
-                1000);
+                updateIntervalMsec);
         }
-        createDataTest(20);
+        // createDataTest(2, 2000, 100);
         socketio.on('updateMachineStatus', function(status) {
             processData(status.machine_id, status.current_value, 100);
         })

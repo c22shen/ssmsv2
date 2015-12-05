@@ -9,15 +9,16 @@ var http = require('http');
 var socketio = require('socket.io');
 
 var config = require('./config');
+
 var routes = require('./routes/index');
+var machines = require('./routes/machines');
 
 mongoose.connect(config.mongoUri);
 var app = express();
 
 server = http.createServer(app);
 io = socketio.listen(server);
-// require('.sockets')(io);
-routes(app, io);
+// routes(app, io);
 server.listen(process.env.PORT || 3000);
 
 
@@ -44,6 +45,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
+app.use('/machines', machines);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

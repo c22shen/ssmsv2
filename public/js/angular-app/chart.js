@@ -17,17 +17,25 @@ angular
             svg.attr({
                 height: height
             });
+
+
             var points = svg.append('g').attr('class', 'points').selectAll('g.point');
             var x = d3.scale.linear();
             var y = d3.scale.linear();
-            var x_extent = d3.extent(scope.data, function(d, i) {
-                return d.x_pos;
-            });
-            x.domain(x_extent);
-            var y_max = d3.max(scope.data, function(d) {
-                return d.y_pos
-            });
-            y.domain([0, y_max]);
+
+            if (!!scope.data) {
+                var x_extent = d3.extent(scope.data, function(d, i) {
+                    return d.x_pos;
+                });
+                x.domain(x_extent);
+                var y_max = d3.max(scope.data, function(d) {
+                    return d.y_pos
+                });
+                y.domain([0, y_max]);
+
+            }
+
+
             scope.$watch(function() {
                 w = el.clientWidth;
                 h = el.clientHeight;
@@ -48,10 +56,21 @@ angular
             }, true);
 
             var update = function() {
-                if (!scope.data) {
+
+                if (!scope.data || scope.data.length === 0) {
                     return;
                 }
+
+
                 points = points.data(scope.data);
+                    var x_extent = d3.extent(scope.data, function(d, i) {
+                        return d.x_pos;
+                    });
+                    x.domain(x_extent);
+                    var y_max = d3.max(scope.data, function(d) {
+                        return d.y_pos
+                    });
+                    y.domain([0, y_max]);
 
                 var circle = points.enter()
                     .append('g')

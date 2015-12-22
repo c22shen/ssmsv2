@@ -7,6 +7,8 @@ angular
             $scope.$apply();
         })
 
+        $rootScope.barGraphData = [1,2,3];
+
         var initializeStatusData = function() {
             $http.get('/machines/positions', {
             }).

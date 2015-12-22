@@ -7,7 +7,6 @@ angular
 .directive('chart', ["d3", "$rootScope", "$window",
     function(d3, $rootScope, $window) {
         function link(scope, el, attr) {
-            var sam = 9;
             el = el[0];
             var w, h;
             var height = 500,

@@ -30,6 +30,31 @@ io.sockets.emit('get msg', "I GOT MESSAGE");
   });
 });
 
+/*-----------MQTT------------*/
+var mqtt = require('mqtt');
+
+// Create a client connection
+var client = mqtt.createClient(19506, 'm10.cloudmqtt.com', {
+  username: 'mfbscall',
+  password: '3sTu31WtAqZ6' 
+});
+
+client.on('connect', function() { // When connected
+
+  // subscribe to a topic
+  client.subscribe('machine', function() {
+    // when a message arrives, do something with it
+    client.on('message', function(topic, message, packet) {
+      var current_value_parsed = message.split(":");
+      current_value = parseInt(current_value_parsed[2], 16) * 256 + parseInt(current_value_parsed[3], 16);
+      io.sockets.emit("updateMachineStatus", {
+        machine_id: current_value_parsed[1],
+        current_value: current_value
+      });
+    });
+  });
+});
+/*-----------MQTT------------*/
 
 
 // view engine setup
@@ -80,3 +105,4 @@ app.use(function(err, req, res, next) {
 
 
 module.exports = app;
+

@@ -43,7 +43,13 @@ var picture_size = 74;
             var workbench4 = svg.append('g').attr('class', 'workbench4').append('rect');
             
             var cnc = svg.append('g').attr('class', 'cnc').append('rect');
+            var msgPopover = svg.append('g').attr('class', 'pop').append('div').style({
+                width: 100,
+                height: 50
+            }).style({'fill': 'white', 'fill-opacity': 0});
+            var officetext = d3.select('.pop').append('text').classed('popovertext', true).text('OFFICE').attr({'font-size': '30'});
 
+            d3.select('.pop').append('text')
             var x = d3.scale.linear();
             var y = d3.scale.linear();
 
@@ -63,6 +69,19 @@ var millingfreepattern = defs.append("svg:pattern")
     .attr("y", 0);
 
 
+var lathesfreepattern = defs.append("svg:pattern")
+    .attr("id", "lathes_pattern")
+    .attr("width", 74)
+    .attr("height", 74)
+    .attr("patternUnits", "userSpaceOnUse")
+    .append("svg:image")
+    .attr("id", "lathes_pattern_image")
+    .attr("xlink:href", '/images/lathesfree.png')
+    .attr("width", 74)
+    .attr("height", 74)
+    .attr("x", 0)
+    .attr("y", 0);
+
 
             scope.$watch(function() {
                 // console.log("watch called");
@@ -78,8 +97,8 @@ var millingfreepattern = defs.append("svg:pattern")
             function resize() {
 
 
-                console.log(x(picture_size));
-                console.log(y(picture_size));
+                // console.log(x(picture_size));
+                // console.log(y(picture_size));
                 // point.style('fill', "url(#milling_pattern)");
                 svg.attr({
                     width: w,
@@ -87,6 +106,21 @@ var millingfreepattern = defs.append("svg:pattern")
                 });
                 x.range([0, w]);
                 y.range([0, h]);
+
+     msgPopover.attr({
+                width: x(100),
+                height: y(50)
+            })
+
+
+                svg.select("#lathespattern").attr("width", x(picture_size))
+    .attr("height", y(picture_size));
+
+                svg.select('#lathes_pattern_image').attr("width", x(picture_size))
+                .attr("height", y(picture_size));
+
+
+
                 svg.select("#milling_pattern").attr("width", x(picture_size))
     .attr("height", y(picture_size));
 
@@ -100,7 +134,6 @@ var millingfreepattern = defs.append("svg:pattern")
                 fill: '#D9F0FF',
                 'stroke-width':3
             })
-
 
             workbench.attr({
                 x: x(40), 
@@ -158,9 +191,40 @@ var millingfreepattern = defs.append("svg:pattern")
 
                 svg.on('mousemove', function(){
                     var pos = d3.mouse(this);
+                    x_pos = pos[0];
+                    y_pos = pos[1];
+
+                    if (x_pos>x(587) && x_pos<x(944)){
+                        if (y_pos>y(60) && y_pos<y(319)){
+                        console.log("within horizontal strip");
+msgPopover.attr({
+    x: x_pos,
+    y: y_pos
+}).style('fill-opacity', 1)
+
+officetext.attr({
+    x: x_pos,
+    y: y_pos+25,
+    visibility: 'visible',
+    'alignment-baseline': "middle",
+    'text-anchor':"middle"
+}).style('fill-opacity', 1)
+                
+
+                        }
+                    } else if (x_pos>x(587) && x_pos<x(944)){
+
+
+                    }
+                    else {
+                        msgPopover.style('fill-opacity', 0)
+                        officetext.attr('visibility', 'hidden')
+                    }
+
                     // svg.append('circle').attr("cx", pos[0]).attr("cy", pos[1]).attr('r', 3);
 
                 })
+
 
                 update();
             }
@@ -197,10 +261,15 @@ var millingfreepattern = defs.append("svg:pattern")
                 // circle.append('circle').attr('r', 10);
                 // console.log()
                 point = circle.append('rect').attr({width: x(74), height: y(74)})
-                .style('fill', 'green')
-                .style('fill', "url(#milling_pattern)");
+                .style('fill', function(d){if (d.machineType==='lathes'){return "url(#lathes_pattern)"} else {return "url(#milling_pattern)"}});
                 points.attr('transform', function(d, i) {
                     return 'translate(' + [x(d.x_pos), y(d.y_pos)] + ')';
+                }).on('mouseover',function(){
+                    console.log("mouseover");
+                })
+
+                point.on('mouseover',function(){
+                    console.log("mouseover");
                 })
 
                 points.attr('fill', function(d) {

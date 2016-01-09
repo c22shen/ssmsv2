@@ -21,66 +21,14 @@ angular
                         'background-repeat': 'no-repeat',
                         'background-color': '#67C3FF'
         });
-            // 'background-color': '#2980B9'
 
 
-// background-image: url('/images/lab.png'); background-position: center center;
-//     <!-- background-size: 100%;  -->
+var defs = svg.append('svg:defs');
 
-//     height: 0;
-//     padding: 0; /* remove any pre-existing padding, just in case */
-//     padding-bottom: 124.2%; /* for a 4:3 aspect ratio */
-//     <!-- background-image: url(foo.png); -->
-//     background-position: center center;
-//     background-size: 100%;
-//     background-repeat: no-repeat;
-//     background-color: #2980B9;
+var picture_size = 74;
 
 
 
-            // svg.attr({
-            //     height: height
-            // });
-
-            // var office = svg.append('g').classed('office', true).append('rect').attr({
-            //     x: "500", 
-            //     y:"20", 
-            //     width:"250", 
-            //     height:"150"
-            // }).style("fill", "blue");
-
-            // var workstation1 = svg.append('g').classed('workstation', true).append('rect').attr({
-            //     x: "100", 
-            //     y:"400", 
-            //     width:"150", 
-            //     height:"40"
-            // }).style("fill", "blue");
-
-            // var workstation2 = svg.append('g').classed('workstation', true).append('rect').attr({
-            //     x: "100", 
-            //     y:"320", 
-            //     width:"150", 
-            //     height:"40"
-            // }).style("fill", "blue");
-
-            // var workstation3 = svg.append('g').classed('workstation', true).append('rect').attr({
-            //     x: "100", 
-            //     y:"240", 
-            //     width:"150", 
-            //     height:"40"
-            // }).style("fill", "blue");
-
-
-            // var workstation4 = svg.append('g').classed('workstation', true).append('rect').attr({
-            //     x: "100", 
-            //     y:"160", 
-            //     width:"150", 
-            //     height:"40"
-            // }).style("fill", "blue");
-
-
-// <rect x="50" y="20" width="150" height="150"
-  // style="fill:blue;stroke:pink;stroke-width:5;fill-opacity:0.1;stroke-opacity:0.9" />
 
             var point;
 
@@ -99,23 +47,21 @@ angular
             var x = d3.scale.linear();
             var y = d3.scale.linear();
 
-            if (!!scope.data) {
-                // var x_extent = d3.extent(scope.data, function(d, i) {
-                //     return d.x_pos;
-                // });
-                    var x_max = d3.max(scope.data, function(d){
-                        return d.x_pos
-                    })
-                // x.domain([0, x_max]);
                 x.domain([0, 1500]);
-
-                // x.domain(x_extent);
-                var y_max = d3.max(scope.data, function(d) {
-                    return d.y_pos
-                });
-                // y.domain([0, y_max]);
                 y.domain([0, 2094]);
-            }
+var millingfreepattern = defs.append("svg:pattern")
+    .attr("id", "milling_pattern")
+    .attr("width", 74)
+    .attr("height", 74)
+    .attr("patternUnits", "userSpaceOnUse")
+    .append("svg:image")
+    .attr("id", "milling_pattern_image")
+    .attr("xlink:href", '/images/millingfree.png')
+    .attr("width", 74)
+    .attr("height", 74)
+    .attr("x", 0)
+    .attr("y", 0);
+
 
 
             scope.$watch(function() {
@@ -130,13 +76,22 @@ angular
             }, resize);
 
             function resize() {
+
+
+                console.log(x(picture_size));
+                console.log(y(picture_size));
+                // point.style('fill', "url(#milling_pattern)");
                 svg.attr({
                     width: w,
                     height: h
                 });
                 x.range([0, w]);
                 y.range([0, h]);
+                svg.select("#milling_pattern").attr("width", x(picture_size))
+    .attr("height", y(picture_size));
 
+                svg.select('#milling_pattern_image').attr("width", x(picture_size))
+                .attr("height", y(picture_size));
             office.attr({
                 x: x(587), 
                 y: y(60),
@@ -203,7 +158,7 @@ angular
 
                 svg.on('mousemove', function(){
                     var pos = d3.mouse(this);
-                    svg.append('circle').attr("cx", pos[0]).attr("cy", pos[1]).attr('r', 3);
+                    // svg.append('circle').attr("cx", pos[0]).attr("cy", pos[1]).attr('r', 3);
 
                 })
 
@@ -241,7 +196,9 @@ angular
 
                 // circle.append('circle').attr('r', 10);
                 // console.log()
-                point = circle.append('rect').attr({width: x(74), height: y(74)});
+                point = circle.append('rect').attr({width: x(74), height: y(74)})
+                .style('fill', 'green')
+                .style('fill', "url(#milling_pattern)");
                 points.attr('transform', function(d, i) {
                     return 'translate(' + [x(d.x_pos), y(d.y_pos)] + ')';
                 })

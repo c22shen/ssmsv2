@@ -46,7 +46,7 @@ client.on('connect', function() { // When connected
     // when a message arrives, do something with it
     client.on('message', function(topic, message, packet) {
       console.log("Received '" + message + "' on '" + topic + "'");
-      var current_value_parsed = message.split(":");
+      var current_value_parsed = message.toString().split(":");
       current_value = parseInt(current_value_parsed[2], 16) * 256 + parseInt(current_value_parsed[3], 16);
       io.sockets.emit("updateMachineStatus", {
         machine_id: current_value_parsed[1],

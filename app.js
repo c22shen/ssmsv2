@@ -51,7 +51,6 @@ client.on('connect', function() { // When connected
         machine_id: current_value_parsed[0],
         current_value: current_value
       });
-      console.log(""+current_value);
     });
   });
 });

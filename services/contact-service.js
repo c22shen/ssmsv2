@@ -11,7 +11,7 @@ exports.sendMailYunNM = function(){
     var contactName = req.body.contactName;
     var contactEmail = req.body.contactEmail;
     var contactMsg = req.body.contactMsg;
-    var to = 'mingukwon.com@gmail.com';
+    var to = config.yunUser;
     var transporter = nodemailer.createTransport({
         service: 'Gmail',
         auth: {

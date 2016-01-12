@@ -1,5 +1,7 @@
 var nodemailer = require('nodemailer');
 var errorHandler = require('../services/error-service');
+var config = require('../config');
+
 /**
  * Send an email when the contact from is submitted
  */
@@ -10,7 +12,6 @@ exports.sendMailYunNM = function(){
     var contactEmail = req.body.contactEmail;
     var contactMsg = req.body.contactMsg;
     var to = 'mingukwon.com@gmail.com';
-    console.log(process.env.Yun_User);
     var transporter = nodemailer.createTransport({
         service: 'Gmail',
         auth: {

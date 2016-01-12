@@ -32,7 +32,6 @@ angular
             if (machineDataArray.length != 0) {
                 currentMachineStatus = machineDataArray[0].status;
             }
-            console.log(""+currentMachineStatus+"  --  "+isMachineOn(currentValue,currentThreshold));
             if (currentMachineStatus !== isMachineOn(currentValue, currentThreshold)) {
                 $http.post('/machines/create', {
                     machineId: machineId,

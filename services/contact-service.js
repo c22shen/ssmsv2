@@ -13,8 +13,8 @@ exports.sendMailYunNM = function(){
     var transporter = nodemailer.createTransport({
         service: 'Gmail',
         auth: {
-            user: 'mingukwon.com@gmail.com',
-            pass: 'mingoo90'
+            user: process.env.Yun_User,
+            pass: process.env.Yun_Pass
         }
     });
     console.log('!! ' + contactEmail +' '+contactName +' '+contactMsg +' ');

@@ -10,11 +10,12 @@ exports.sendMailYunNM = function(){
     var contactEmail = req.body.contactEmail;
     var contactMsg = req.body.contactMsg;
     var to = 'mingukwon.com@gmail.com';
+    console.log(process.env.Yun_User);
     var transporter = nodemailer.createTransport({
         service: 'Gmail',
         auth: {
-            user: process.env.Yun_User,
-            pass: process.env.Yun_Pass
+            user: config.yunUser,
+            pass: config.yunPass
         }
     });
     console.log('!! ' + contactEmail +' '+contactName +' '+contactMsg +' ');

@@ -21,9 +21,12 @@ angular
         var processData = function(machineId, currentValue, currentThreshold) {
             var currentMachineStatus;
             var isMachineOn = function(current_reading, threshold) {
+                console.log(""+current_reading);
                 if (typeof current_reading !== 'number' || typeof threshold !== 'number') {
+                    console.log("false");
                     return false;
                 }
+                                    console.log("true");
                 return current_reading > threshold ? true : false;
             }
             var machineDataArray = $rootScope.statusArray.filter(function(d) {

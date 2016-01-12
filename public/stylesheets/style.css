@@ -6,3 +6,31 @@ body {
 a {
   color: #00B7FF;
 }
+h4{
+  font-size: 19px;
+  line-height: 1.375em;
+  color: #303030;
+  font-weight: 400;
+}
+h5{
+  font-size: 14px;
+  line-height: 1.375em;
+  color: #303030;
+  font-weight: 300;
+  margin-bottom: 30px;
+}
+.row {
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-top:15px;
+  margin-bottom:15px;
+}
+.bg-default {
+  color: #222;
+  background-color: #fff;
+}
+.container-fluid {
+  margin-right: auto;
+  margin-left: auto;
+  padding: 60px 50px;
+}

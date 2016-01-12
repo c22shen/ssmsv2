@@ -1,2 +1,77 @@
 {{newestData}}
-<chart class="chart" data="statusArray"></chart>
+<div class="container-fluid text-center">
+	<div class="row">
+		<div class="col-xs-12">
+			<scatterchart class="chart" data="statusArray" style=""></scatterchart>
+		</div>
+	</div>
+</div>
+
+<div id="about" class="container-fluid text-center bg-default">
+	<div class="row">
+		<div class="col-sm-12 page-header">
+			<h1><b>ABOUT</b></h1>
+		</div>
+		<div class="col-sm-12">
+			<p>We do this and that that and this. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-3"></div>
+		<div class="col-sm-3">
+		<div calss="thumbnail">
+        	<img src="../../images/profile_example.png" class="img-circle" width="100" height="100"><hr>
+        	<h4><strong>Mingu Kwon</strong></h4>
+        	<h4>Titles</h4>
+        	<h5>Hi I am something something blah blah blah. I do things like one two three four five six seven eight nine ten</h5>
+        </div>
+        </div>
+        <div class="col-sm-3">
+        	<img src="../../images/profile_example.png" class="img-square" width="100" height="100"><hr>
+        	<h4><strong>Mingu Kwon</strong></h4>
+        	<h4>Titles</h4>
+        	<h5>Hi I am something something blah blah blah. I do things like one two three four five six seven eight nine ten</h5>
+        </div>
+        <div class="col-sm-3"></div>
+	</div>
+</div>
+
+<div id ="contact" class="container-fluid" >
+  <div class="row">
+    <div class="col-sm-12 page-header">
+      <h1><b>CONTACT</b></h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-5">
+      <p>YUN:</p>
+      <p><span class="glyphicon glyphicon-map-marker"></span> WATERLOO, ON, CANADA</p>
+      <p><span class="glyphicon glyphicon-phone"></span> +1 123-456-7890</p>
+      <p><span class="glyphicon glyphicon-envelope"></span> Yun@gmail.com</p>	   
+    </div>
+    <div class="col-sm-7" data-ng-controller="ContactController">
+      <form data-ng-submit="sendMailYun()" class="form-vertical" autocomplete="off" >
+        <fieldset>
+          <div class="col-sm-6 form-group">
+            <input type="text" id ="contactName" name="contactName" class="form-control" data-ng-model="contact.contactName" placeholder="Name" >
+          </div>
+          <div class="col-sm-6 form-group">
+            <input type="email" id ="contactEmail" name="contactEmail" class="form-control" data-ng-model="contact.contactEmail" placeholder="Email" >
+          </div>
+          <div class="col-sm-12 form-group">
+            <textarea id ="contactMsg" name="contactMsg" class="form-control" data-ng-model="contact.contactMsg" placeholder="Comment" ></textarea>
+          </div>
+          <div class="col-sm-12 text-center form-group">
+            <button type="submit" class="btn btn-default">SEND</button>
+          </div>
+          <div data-ng-show="error" class="text-center text-danger">
+            <strong>{{error}}</strong>
+          </div>
+          <div data-ng-show="success" class="text-center text-success">
+            <strong>{{success}}</strong>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</div>

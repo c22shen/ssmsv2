@@ -1,4 +1,5 @@
 var nodemailer = require('nodemailer');
+var errorHandler = require('../services/error-service');
 /**
  * Send an email when the contact from is submitted
  */

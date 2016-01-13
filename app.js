@@ -40,12 +40,13 @@ io.sockets.on('connection', function(socket){
      console.log("positions:",positions);
     }
   })
+  socket.on('updateStatus', function(status){
+    console.log("--------app.js---------socketon:",status);
+    MachineService.storeMachineStatus(status.machine_id,status.machine_status);
+  });
 });
 
-io.sockets.on('updateStatus', function(status){
-  console.log("--------app.js---------socketon:");
-  MachineService.storeMachineStatus(status.machine_id,status.machine_status);
-});
+
 
 // init status data array
 

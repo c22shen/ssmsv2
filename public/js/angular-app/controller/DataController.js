@@ -11,8 +11,8 @@ angular
             socketio.on('initStatusData', function(statusData) {
                 $rootScope.statusArray = statusData.data;
                 $rootScope.statusArray.forEach(function(d){d.status? null: d.status=false});
-            };
-        })
+            })
+        }
 
         var processData = function(machineId, currentValue, currentThreshold) {
             var currentMachineStatus;

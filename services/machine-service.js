@@ -1,5 +1,6 @@
 var Machine = require('../models/machine').Machine;
 var Position = require('../models/position').Position;
+var mongoose = require('mongoose');
 //     //  0:length
 //     //  1:length
 //     //  2: FrameType
@@ -29,6 +30,9 @@ exports.storeMachineStatus = function(machine_id, machine_status) {
         newMachineStatus.save(function(err) {
             if (err) {
                 console.log("storeMachineStatus error",err);
+            }
+            else{
+                  console.log("--------machineservice successful");
             }
         })
 }

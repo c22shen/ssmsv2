@@ -43,6 +43,7 @@ io.sockets.on('connection', function(socket){
 });
 
 io.sockets.on('updateStatus', function(status){
+  console.log("--------app.js---------socketon:");
   MachineService.storeMachineStatus(status.machine_id,status.machine_status);
 });
 

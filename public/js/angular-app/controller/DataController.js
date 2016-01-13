@@ -7,13 +7,6 @@ angular
             $scope.$apply();
         })
 
-        var initializeStatusData = function() {
-            socketio.on('initStatusData', function(statusData) {
-                $rootScope.statusArray = statusData.data;
-                $rootScope.statusArray.forEach(function(d){d.status? null: d.status=false});
-            })
-        }
-
         var processData = function(machineId, currentValue, currentThreshold) {
             var currentMachineStatus;
             var isMachineOn = function(current_reading, threshold) {
@@ -84,5 +77,10 @@ angular
         // createDataTest(2, 2000, 100);
         socketio.on('receiveStatus', function(status) {
             processData(status.machine_id, status.current_value, 10);
+        })
+        socketio.on('initStatus', function(statusData) {
+            console.log("initStatus:",statusData.positions);
+            $rootScope.statusArray = statusData.positions;
+            $rootScope.statusArray.forEach(function(d){d.status? null: d.status=false});
         })
     }])

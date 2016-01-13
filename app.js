@@ -33,18 +33,18 @@ io.sockets.on('updateStatus', function(status){
 });
 
 // init status data array
-
 Position.find({}, function(err, positions) {
   if (err) {
-    console.logs("getMachinePositions",err);
+    console.log("getMachinePositions",err);
   } else {
-    io.sockets.emit("initStatusData", {
+    io.sockets.emit("initStatus", {
       positions:positions
     });
+    console.log("positions:",positions);
   }
 })
 
-
+    
 /*-----------MQTT------------*/
 var mqtt = require('mqtt');
 

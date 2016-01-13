@@ -76,6 +76,7 @@ angular
         }
         // createDataTest(2, 2000, 100);
         socketio.on('receiveStatus', function(status) {
+            console.log("socketworks:",status);
             processData(status.machine_id, status.current_value, 10);
         })
         socketio.on('initStatus', function(statusData) {

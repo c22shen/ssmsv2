@@ -11,33 +11,47 @@ var socketio = require('socket.io');
 var config = require('./config');
 
 var routes = require('./routes/index');
-var machines = require('./routes/machines');
+//var machines = require('./routes/machines');
 var contact = require('./routes/contact');
+
+var MachineService = require('./services/machine-service');
+var Machine = require('./models/machine').Machine;
+var Position = require('./models/position').Position;
 
 mongoose.connect(config.mongoUri);
 var app = express();
+
+
 
 server = http.createServer(app);
 io = socketio.listen(server);
 // routes(app, io);
 server.listen(process.env.PORT || 3000);
 
-
-io.sockets.on('connection', function(socket){
-  console.log("socketio connected");
-io.sockets.emit('get msg', "I GOT MESSAGE");
-  socket.on('updateMachineStatus', function(data){
-    io.sockets.emit('get msg', data);
-  });
+io.sockets.on('updateStatus', function(status){
+  MachineService.storeMachineStatus(status.machine_id,status.machine_status);
 });
+
+// init status data array
+
+Position.find({}, function(err, positions) {
+  if (err) {
+    console.logs("getMachinePositions",err);
+  } else {
+    io.sockets.emit("initStatusData", {
+      positions:positions
+    });
+  }
+})
+
 
 /*-----------MQTT------------*/
 var mqtt = require('mqtt');
 
 // Create a client connection
 var client = mqtt.createClient(19506, 'm10.cloudmqtt.com', {
-  username: config.mqttUser,
-  password: config.mqttPass 
+  username: 'mfbscall',
+  password: '3sTu31WtAqZ6' 
 });
 
 client.on('connect', function() { // When connected
@@ -48,7 +62,7 @@ client.on('connect', function() { // When connected
     client.on('message', function(topic, message, packet) {
       var current_value_parsed = message.toString().split(":");
       current_value = parseInt(current_value_parsed[1], 16) * 256 + parseInt(current_value_parsed[2], 16);
-      io.sockets.emit("updateMachineStatus", {
+      io.sockets.emit("receiveStatus", {
         machine_id: current_value_parsed[0],
         current_value: current_value
       });
@@ -56,7 +70,6 @@ client.on('connect', function() { // When connected
   });
 });
 /*-----------MQTT------------*/
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -71,7 +84,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/machines', machines);
 app.use('/contact',contact);
 
 // catch 404 and forward to error handler

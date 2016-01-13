@@ -8,15 +8,11 @@ angular
         })
 
         var initializeStatusData = function() {
-            $http.get('/machines/positions', {
-            }).
-            then(function(res) {
-                $rootScope.statusArray = res.data;
+            socketio.on('initStatusData', function(statusData) {
+                $rootScope.statusArray = statusData.data;
                 $rootScope.statusArray.forEach(function(d){d.status? null: d.status=false});
-            }, function(res) {})
-        }
-        initializeStatusData();
-
+            };
+        })
 
         var processData = function(machineId, currentValue, currentThreshold) {
             var currentMachineStatus;
@@ -33,11 +29,10 @@ angular
                 currentMachineStatus = machineDataArray[0].status;
             }
             if (currentMachineStatus !== isMachineOn(currentValue, currentThreshold)) {
-                $http.post('/machines/create', {
-                    machineId: machineId,
-                    status: !currentMachineStatus
-                }).
-                then(function(res) {}, function(res) {})
+                socketio.emit("updateStatus", {
+                    machine_id: machineId,
+                    machine_status: !currentMachineStatus
+                });
 
                 $rootScope.statusArray.forEach(function(data) {
                     if (data.machineId === machineId) {
@@ -87,7 +82,7 @@ angular
                 updateIntervalMsec);
         }
         // createDataTest(2, 2000, 100);
-        socketio.on('updateMachineStatus', function(status) {
+        socketio.on('receiveStatus', function(status) {
             processData(status.machine_id, status.current_value, 10);
         })
     }])

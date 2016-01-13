@@ -22,6 +22,7 @@ angular
                 currentMachineStatus = machineDataArray[0].status;
             }
             if (currentMachineStatus !== isMachineOn(currentValue, currentThreshold)) {
+                console.log("updateStatus:",machineId,currentMachineStatus);
                 socketio.emit("updateStatus", {
                     machine_id: machineId,
                     machine_status: !currentMachineStatus
@@ -33,6 +34,7 @@ angular
                     }
                 })
             };
+            console.log("not different:");
 
         }
 

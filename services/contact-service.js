@@ -5,13 +5,13 @@ var config = require('../config');
 /**
  * Send an email when the contact from is submitted
  */
-exports.sendMailYunNM = function(){
+exports.sendMail = function(){
     return function(req,res){
     console.log("ContactService");
     var contactName = req.body.contactName;
     var contactEmail = req.body.contactEmail;
     var contactMsg = req.body.contactMsg;
-    var to = config.yunUser;
+    var to = req.body.to;
     var transporter = nodemailer.createTransport({
         service: 'Gmail',
         auth: {

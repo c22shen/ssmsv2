@@ -57,8 +57,8 @@ var mqtt = require('mqtt');
 
 // Create a client connection
 var client = mqtt.createClient(19506, 'm10.cloudmqtt.com', {
-  username: 'mfbscall',
-  password: '3sTu31WtAqZ6' 
+  username: config.mqttUser,
+  password: config.mqttPass 
 });
 
 client.on('connect', function() { // When connected

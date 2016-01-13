@@ -25,24 +25,29 @@ var app = express();
 
 server = http.createServer(app);
 io = socketio.listen(server);
-// routes(app, io);
+//routes(app, io);
 server.listen(process.env.PORT || 3000);
+
+io.sockets.on('connection', function(socket){
+  console.log("socketio connected");
+  Position.find({}, function(err, positions) {
+    if (err) {
+      console.log("getMachinePositions",err);
+    } else {
+      socket.emit("initStatus", {
+        positions:positions
+      });
+     console.log("positions:",positions);
+    }
+  })
+});
 
 io.sockets.on('updateStatus', function(status){
   MachineService.storeMachineStatus(status.machine_id,status.machine_status);
 });
 
 // init status data array
-Position.find({}, function(err, positions) {
-  if (err) {
-    console.log("getMachinePositions",err);
-  } else {
-    io.sockets.emit("initStatus", {
-      positions:positions
-    });
-    console.log("positions:",positions);
-  }
-})
+
 
     
 /*-----------MQTT------------*/
@@ -66,7 +71,6 @@ client.on('connect', function() { // When connected
         machine_id: current_value_parsed[0],
         current_value: current_value
       });
-      console.log("mqttworks:",current_value);
     });
   });
 });

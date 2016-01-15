@@ -1,11 +1,187 @@
 <!-- {{newestData}} -->
-<div class="container">
-<div class="row">
+<!-- <div class="row" style="position:absolute; top:5px">
+    <p style="color:green">Machine Shop is currently open. 10:00am - 9:00pm</p>
+</div> -->
+<nav class="navbar navbar-fixed-top" style="background-color: #2ADCCB; color:white">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"><i class="fa fa-cloud"><span>YUN</span></i></a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="#">About</a></li>
+                <li><a href="#about">Info</a></li>
+                <li><a href="#contact">Summary</a></li>
+                <li><a href="#contact">Map</a></li>
+                <li><a href="#contact">Schedule</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+        <!--/.nav-collapse -->
+    </div>
+</nav>
+<section class="module parallax parallax-1 overview" style="     ">
+    <div class="container" style="margin-top: 50px">
+        <div class="row">
+            <h3 class="roboto-font border-bottom" style="">Machines Available</h3>
+        </div>
+        <div class="row" style="">
+            <div class="col-xs-12 col-sm-4">
+                <div class="square" style="margin:3em 0; padding:1em;">
+                    <div class="row">
+                        <img src="/images/milling_white.png" alt="" style="height:3em; margin: 0 auto; display:block ">
+                    </div>
+                    <div class="row">
+                        <c3chart bindto-id="donut-plot1-chart">
+                            <chart-column column-id="Free" column-values="2" column-type="donut" />
+                            <chart-column column-id="Busy" column-values="5" column-type="donut" />
+                            <chart-legend show-legend="false" />
+                            <chart-tooltip show-tooltip="false" />
+                            <chart-donut title="2" expand="true" width="10" show-label="false" />
+                            <chart-events on-click-data="showClick(data)" />
+                        </c3chart>
+                    </div>
+                    <div class="row">
+                        <h3 class="text-center" style="">MILLING</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                <div class="square" style="margin:3em 0; padding:1em; ">
+                    <div class="row">
+                        <img src="/images/lathe_white.png" alt="" style="height:3em; margin: 0 auto; display:block ">
+                    </div>
+                    <!--                     <div class="row">
+                        <h1 class="roboto-font text-center" style="font-size:9em; margin: 0">
+                        5
+                    </h1>
+                    </div> -->
+                    <c3chart bindto-id="donut-plot2-chart">
+                        <chart-column column-id="Free" column-values="1" column-type="donut" />
+                        <chart-column column-id="Busy" column-values="2" column-type="donut" />
+                        <chart-legend show-legend="false" />
+                        <chart-tooltip show-tooltip="false" />
+                        <chart-donut title="1" expand="true" width="10" show-label="false" />
+                        <chart-events on-click-data="showClick(data)" />
+                    </c3chart>
+                    <div class="row">
+                        <h3 class="text-center" style="margin: 0.5em auto">LATHE</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--                 <div class="row">
+            <h3 class="roboto-font;" style="border-bottom: thin solid #ffffff; color:white">Usage in the Past Hour</h3>
+        </div> -->
+        <div class="row">
+            <c3chart bindto-id="chart2">
+                <chart-axis>
+                    <chart-axis-x show='false' />
+                    <chart-axis-y show='false' />
+                </chart-axis>
+                <chart-column column-id="line1" column-name="LATHE" column-color="#32FFEB" column-values="30,200,100,400,150,250" column-type="spline" />
+                <chart-column column-id="line2" column-name="MILLING" column-color="#E8A86F" column-values="130,100,200,300,50,150" column-type="spline" />
+            </c3chart>
+        </div>
+    </div>
+</section>
+<section class="module content">
+    <div class="container">
+        <div class="row">
+            <h3 class="roboto-font border-bottom" style="color:black">Machine Shop Schedule</h3>
+        </div>
+        <div class="row">
+            <div class="col-xs-6">
+                <img width="100%" src="http://maps.googleapis.com/maps/api/staticmap?center=Engineering+5+200+University+Ave+W+Waterloo,+ON+N2L+3E9&zoom=15&scale=false&size=600x350&maptype=roadmap&format=png&visual_refresh=true&markers=size:mid%7Ccolor:0xff2600%7Clabel:1%7CEngineering+5+200+University+Ave+W+Waterloo,+ON+N2L+3E9" alt="Google Map of Engineering 5 200 University Ave W Waterloo, ON N2L 3E9">
+            </div>
+            <div class="col-xs-6">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Day</th>
+                            <th>Start</th>
+                            <th>Finish</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">Monday</th>
+                            <td>8:30AM</td>
+                            <td>4:30PM</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Tuesday</th>
+                            <td>8:30AM</td>
+                            <td>9:00PM</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Wednesday</th>
+                            <td>8:30AM</td>
+                            <td>9:00PM</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Thursday</th>
+                            <td>8:30AM</td>
+                            <td>9:00PM</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Friday</th>
+                            <td>8:30AM</td>
+                            <td>9:00PM</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Saturday</th>
+                            <td>10:00AM</td>
+                            <td>5:00PM </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Sunday</th>
+                            <td>CLOSED</td>
+                            <td>CLOSED </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="module parallax parallax-2" style="background-color:#5A7E99; height: 550px;">
+    <div class="container">
+        <div class="row">
+            <h3 class="roboto-font border-bottom" style="">Machine Shop Map</h3>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="map-section">
+                    <img src="/images/labhorizontalwhite.png" style="max-width:100%; max-height:450px; margin: 2em auto 3em auto; display:block" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="module content">
+    <div class="container">
+        <h2>CONTACTS</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+    </div>
+</section>
+<!-- <div class="row">
 <div class="col-xs-6">
-	<scatterchart class="chart" data="statusArray" style=""></scatterchart>
-	
+    <scatterchart class="chart" data="statusArray" style=""></scatterchart>
+    
 </div>
-</div>
+<div class="col-xs-6">
+
 </div>
 
+
+
+
+</div> -->
 <!-- <barchart class="chart" data="barGraphData"></barchart> -->

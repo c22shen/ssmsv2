@@ -1,12 +1,77 @@
 body {
-  padding: 50px;
+  /*padding: 50px;*/
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
-  color: #00B7FF;
+  color: white;
 }
 
 .yaxis path {
 	visibility: hidden;
+}
+
+.icon-bar {
+	background-color: white;
+}
+
+.roboto-font {
+	font-family: 'Roboto', sans-serif;
+	font-weight:100;
+	color:white;
+}
+
+.roboto-font-thick {
+	font-family: 'Roboto', sans-serif;
+	font-weight:500;
+}
+
+.square {
+	width: 250px ;
+	height: 275px;
+	border: thin solid #838B9B;
+	color:white;
+	background-color:#21C5E8;
+	opacity:0.7;
+}
+
+
+#donut-plot1-chart, #donut-plot2-chart {
+    width: 150px;
+    height: 150px;    
+    margin: 1em auto 0 auto;
+}
+
+.c3-chart-arcs-title {
+	font-family: 'Roboto', sans-serif;
+	font-weight:100;
+	font-size:5em !important;
+	fill:white;
+}
+
+.c3-chart-arc path {
+    stroke: none !important;
+}
+
+.c3-arc-Free {
+	fill: #32FFEB !important;
+}
+
+.c3-arc-Busy {
+	fill: #E8A86F !important;
+}
+
+#chart2{
+	height:200px;
+}
+
+.c3-line {
+	stroke-width: 0.5em !important;
+}
+.c3-legend-item {
+	fill:white;
+}
+
+.border-bottom {
+	border-bottom: thin solid #ffffff; color:white
 }

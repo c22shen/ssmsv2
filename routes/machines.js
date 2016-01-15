@@ -6,5 +6,6 @@ router.post('/create', MachineService.storeMachineStatus());
 router.put('/receive', MachineService.updateMachineStatus());
 router.post('/position', MachineService.storeMachinePosition());
 router.get('/positions', MachineService.getMachinePositions());
+// console.log(io);
 
 module.exports = router;

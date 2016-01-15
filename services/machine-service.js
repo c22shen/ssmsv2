@@ -21,6 +21,7 @@ var Position = require('../models/position').Position;
 //     // 18: Analog Value 
 //     // 19: Analog Value 
 
+
 exports.storeMachineStatus = function() {
     return function(req, res, next) {
         var newMachineStatus = new Machine({

@@ -1,7 +1,7 @@
 'use strict';
 
 angular
-	.module('app', ['ui.router', 'ui.bootstrap', 'ngSanitize', 'ngCookies', 'chart', 'ui.bootstrap', 'gridshore.c3js.chart']);
+	.module('app', ['ui.router', 'ui.bootstrap', 'ngSanitize', 'ngCookies', 'chart', 'ui.bootstrap']);
 
 
 angular.module('app').controller('ProgressDemoCtrl', function ($scope) {

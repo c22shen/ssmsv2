@@ -38,14 +38,7 @@
                         <img src="/images/milling_white.png" alt="" style="height:3em; margin: 0 auto; display:block ">
                     </div>
                     <div class="row">
-                        <c3chart bindto-id="donut-plot1-chart">
-                            <chart-column column-id="Free" column-values="2" column-type="donut" />
-                            <chart-column column-id="Busy" column-values="5" column-type="donut" />
-                            <chart-legend show-legend="false" />
-                            <chart-tooltip show-tooltip="false" />
-                            <chart-donut title="2" expand="true" width="10" show-label="false" />
-                            <chart-events on-click-data="showClick(data)" />
-                        </c3chart>
+                        <piechart class="chart" data="statusArray"></piechart>
                     </div>
                     <div class="row">
                         <h3 class="text-center" style="">MILLING</h3>
@@ -62,14 +55,7 @@
                         5
                     </h1>
                     </div> -->
-                    <c3chart bindto-id="donut-plot2-chart">
-                        <chart-column column-id="Free" column-values="1" column-type="donut" />
-                        <chart-column column-id="Busy" column-values="2" column-type="donut" />
-                        <chart-legend show-legend="false" />
-                        <chart-tooltip show-tooltip="false" />
-                        <chart-donut title="1" expand="true" width="10" show-label="false" />
-                        <chart-events on-click-data="showClick(data)" />
-                    </c3chart>
+                       <piechart class="chart" data="statusArray"></piechart>
                     <div class="row">
                         <h3 class="text-center" style="margin: 0.5em auto">LATHE</h3>
                     </div>
@@ -171,6 +157,9 @@
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
     </div>
 </section>
+
+<linechart class="chart" data="statusArray"></linechart>
+    
 <!-- <div class="row">
 <div class="col-xs-6">
     <scatterchart class="chart" data="statusArray" style=""></scatterchart>

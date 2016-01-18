@@ -1,6 +1,18 @@
-    scatterchart, barchart{
-      display: block;
-      z-index: 0;
-      overflow: hidden;
-      font-size: 10px;
+    scatterchart,
+    barchart {
+        display: block;
+        z-index: 0;
+        overflow: hidden;
+        font-size: 10px;
     }
+    
+    piechart {
+    	position: relative;
+        margin: 0 auto;
+        height: 130px;
+        width: 130px;
+        display: block;
+        margin-top: 1em;
+    }
+    
+

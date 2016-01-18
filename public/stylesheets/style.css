@@ -47,6 +47,8 @@ a {
 	font-weight:100;
 	font-size:5em !important;
 	fill:white;
+	text-anchor: middle;
+	dominant-baseline: central;
 }
 
 .c3-chart-arc path {

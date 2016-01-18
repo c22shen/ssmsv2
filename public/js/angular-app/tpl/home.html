@@ -62,7 +62,7 @@
             <textarea id ="contactMsg" name="contactMsg" class="form-control" data-ng-model="contact.contactMsg" placeholder="Comment" ></textarea>
           </div>
           <div class="col-sm-12 text-center form-group">
-            <button type="submit" class="btn btn-default">SEND</button>
+            <button data-ng-disabled="sending"type="submit" class="btn btn-default">SEND</button>
           </div>
           <div data-ng-show="error" class="text-center text-danger">
             <strong>{{error}}</strong>

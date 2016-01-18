@@ -8,9 +8,9 @@ var config = require('../config');
 exports.sendMail = function(){
     return function(req,res){
     console.log("ContactService");
-    var contactName = req.body.contactName;
-    var contactEmail = req.body.contactEmail;
-    var contactMsg = req.body.contactMsg;
+    var contactName = req.body.contact.contactName;
+    var contactEmail = req.body.contact.contactEmail;
+    var contactMsg = req.body.contact.contactMsg;
     var to = req.body.to;
     var transporter = nodemailer.createTransport({
         service: 'Gmail',

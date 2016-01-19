@@ -1,9 +1,5 @@
 angular
-    .module('chart', [])
-    .factory('d3', function() {
-        return d3;
-    })
-
+    .module('ssms.app')
 .directive('scatterchart', ["d3", "$rootScope", "$window",
     function(d3, $rootScope, $window) {
         function link(scope, el, attr) {

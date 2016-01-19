@@ -1,5 +1,5 @@
 angular
-    .module('app')
+    .module('ssms.app')
     .controller("DataController", ['$rootScope', '$scope', 'socketio', '$interval', '$http', '$window', function($rootScope, $scope, socketio, $interval, $http, $window) {
         'use strict';
 

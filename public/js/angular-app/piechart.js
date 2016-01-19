@@ -1,13 +1,8 @@
 angular
-    .module('chart', [])
-    .factory('d3', function() {
-        return d3;
-    })
-
-.directive('piechart', ["d3", "$rootScope", "$window", "$interval",
+    .module('ssms.app')
+    .directive('piechart', ["d3", "$rootScope", "$window", "$interval",
     function(d3, $rootScope, $window, $interval) {
         function link(scope, el, attr) {
-            console.log("piechart");
             el = el[0];
             var width = 130;
             var height = 130;
@@ -75,9 +70,6 @@ angular
             $interval(function() {
                 freeCount = Math.floor((Math.random() * 10) + 1);
                 busyCount = Math.floor((Math.random() * 10) + 1);
-
-                console.log("freeCount", freeCount);
-                console.log("busyCount", busyCount);
                 dataset1 = [{
                     label: 'Free',
                     count: freeCount
@@ -97,7 +89,7 @@ angular
                 }
                 freeDisplay.text(freeCount);
 
-            }, 6000);
+            }, 2000);
 
 
         }

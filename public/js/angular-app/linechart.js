@@ -1,96 +1,73 @@
 angular
-    .module('chart', [])
-    .factory('d3', function() {
-        return d3;
-    })
-
-.directive('linechart', ["d3", "$rootScope", "$window",
-    function(d3, $rootScope, $window) {
-        function link(scope, el, attr) {
-            el = el[0];
-
-        var data = [{
-            "sale": "202",
-            "year": "2000"
-        }, {
-            "sale": "215",
-            "year": "2001"
-        }, {
-            "sale": "179",
-            "year": "2002"
-        }, {
-            "sale": "199",
-            "year": "2003"
-        }, {
-            "sale": "134",
-            "year": "2003"
-        }, {
-            "sale": "176",
-            "year": "2010"
-        }];
+    .module('ssms.app')
+    .directive('linechart', ["d3", "$rootScope",
+        function(d3, $rootScope) {
+            function link(scope, el, attr) {
+                el = el[0];
+                console.log("linechart is here");
+                var data = [{
+                    "sale": "202",
+                    "year": "2000"
+                }, {
+                    "sale": "215",
+                    "year": "2001"
+                }, {
+                    "sale": "179",
+                    "year": "2002"
+                }, {
+                    "sale": "199",
+                    "year": "2003"
+                }, {
+                    "sale": "134",
+                    "year": "2003"
+                }, {
+                    "sale": "176",
+                    "year": "2010"
+                }];
 
 
-    var width = 1000,
-    height = 500;
+                var width = 1000,
+                    height = 500;
 
-            var donutWidth = 10;
-            var radius = Math.min(width, height) / 2;
-            var freeCount = 4;
-            var busyCount = 5;
+                var MARGINS = {
+                    top: 20,
+                    right: 20,
+                    bottom: 20,
+                    left: 50
+                };
 
+                var donutWidth = 10;
+                var freeCount = 4;
+                var busyCount = 5;
 
-
-            var arc = d3.svg.arc()
-                .innerRadius(radius - donutWidth) // NEW
-                .outerRadius(radius);
-            var dataset1 = [{
-                label: 'Free',
-                count: freeCount
-            }, {
-                label: 'Busy',
-                count: busyCount
-            }];
-
-            var pie = d3.layout.pie()
-                .value(function(d) {
-                    return d.count;
-                })
-                .sort(null);
-            var svg_container = d3.select(el).append('svg');
-            width = 1000;
-            height = 400;
-    var MARGINS = {
-        top: 20,
-        right: 20,
-        bottom: 20,
-        left: 50
-    };
-
-    var xScale = d3.scale.linear().range([MARGINS.left, width - MARGINS.right]).domain([2000,2010]);
-    var yScale = d3.scale.linear().range([height - MARGINS.top, MARGINS.bottom]).domain([0,215]); 
+                var svg_container = d3.select(el).append('svg');
 
 
-xAxis = d3.svg.axis()
-    .scale(xScale),
-  
-yAxis = d3.svg.axis()
-    .scale(yScale);
+                var xScale = d3.scale.linear().range([MARGINS.left, width - MARGINS.right]).domain([2000, 2010]);
+                var yScale = d3.scale.linear().range([height - MARGINS.top, MARGINS.bottom]).domain([134, 215]);
 
-            var svg = svg_container
-            .attr('width', width)
-            .attr('height', height)
-            .append("g");
 
-            svg.append("svg:g").call(xAxis);
+                // xAxis = d3.svg.axis()
+                //     .scale(xScale);
+
+                // yAxis = d3.svg.axis()
+                //     .scale(yScale);
+
+                // var svg = svg_container
+                //     .attr('width', width)
+                //     .attr('height', height)
+                //     .append("g");
+
+                // svg.append("svg:g").call(xAxis);
+
+            }
+            return {
+                link: link,
+                restrict: 'E',
+                scope: {
+                    data: '='
+                }
+            };
 
         }
-        return {
-            link: link,
-            restrict: 'E',
-            scope: {
-                data: '='
-            }
-        };
-
-    }
-]);
+    ]);

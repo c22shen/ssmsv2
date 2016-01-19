@@ -1,5 +1,5 @@
 angular
-  .module('app')
+  .module('ssms.app')
   .factory('socketio', ['$rootScope', function ($rootScope) {
   var socket = io.connect();
   return {

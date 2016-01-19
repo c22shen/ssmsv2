@@ -1,5 +1,5 @@
 angular
-    .module('chart')
+    .module('ssms.app')
     .directive('barchart', ["d3", "$rootScope", "$window",
         function(d3, $rootScope, $window) {
             function link(scope, el, attr) {

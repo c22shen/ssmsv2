@@ -1,5 +1,5 @@
     scatterchart,
-    barchart {
+    barchart, linechart {
         display: block;
         z-index: 0;
         overflow: hidden;

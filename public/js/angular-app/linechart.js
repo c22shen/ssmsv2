@@ -16,18 +16,47 @@ angular
                     }
 
                 ];
-                // dataArray = [{
-                //         "count": 150,
-                //         "time": new Date("2015-03-25T08:00:00")
-                //     }, {
-                //         "count": 200,
-                //         "time": new Date("2015-03-25T09:00:00")
-                //     }, {
-                //         "count": 180,
-                //         "time": new Date("2015-03-25T10:00:00")
-                //     }
 
-                // ];
+
+                scope.$watch(function() {
+                    w = el.clientWidth;
+                    h = el.clientHeight;
+                    return w + h;
+                }, resize);
+
+
+                function resize() {
+                    if (w > 1000) {
+                        width = 1000;
+                    } else {
+                        width = w;
+                    }
+                    svg.attr('width', width);
+                    xScale.range([margins.left, width - margins.right]);
+
+                    xAxis = d3.svg.axis().scale(xScale).ticks(d3.time.hour, 3);
+                    d3.select('.xaxis').call(xAxis);
+
+                    redraw();
+
+
+                    // update();
+                }
+
+
+                var redraw = function() {
+                    // d3.select('line1').attr('d', lineGen($rootScope.dataArray));
+                    // .attr('stroke', '#f39c12')
+                    // .attr('stroke-width', 4)
+                    // .attr('fill', 'none');
+
+                    var svg = d3.select("body").transition();
+
+                    // Make the changes
+                    svg.select(".line1") // change the line
+                        .duration(750)
+                        .attr("d", lineGen($rootScope.dataArray));
+                }
 
 
                 var width = 1000,
@@ -58,7 +87,7 @@ angular
                 // xScale.ticks(d3.time.hours, 1);
                 xAxis = d3.svg.axis()
                     .scale(xScale)
-                    .ticks(d3.time.hour, 1)
+                    .ticks(d3.time.hour, 3)
 
 
                 yAxis = d3.svg.axis()
@@ -96,8 +125,8 @@ angular
                 svg.append('svg:path')
                     .classed('line1', true)
                     .attr('d', lineGen($rootScope.dataArray))
-                    .attr('stroke', 'green')
-                    .attr('stroke-width', 2)
+                    .attr('stroke', '#f39c12')
+                    .attr('stroke-width', 4)
                     .attr('fill', 'none');
 
 
@@ -115,7 +144,7 @@ angular
                 var newtime = new Date("2015-03-25T10:00:00");
 
                 $interval(function() {
-                    newtime.setUTCHours(newtime.getUTCHours()+1);
+                    newtime.setUTCHours(newtime.getUTCHours() + 1);
                     // newtime = new Date(newtime.getUTCFullYear(), newtime.getUTCMonth(), newtime.getUTCDate(), newtime.getUTCHours()+1, newtime.getUTCMinutes(), newtime.getUTCSeconds(), newtime.getUTCMilliseconds());
                     // this.setTime(this.getTime() + (h*60*60*1000)); 
 
@@ -126,16 +155,16 @@ angular
                     // xScale.domain([yMin, yMax]);
                     // data.shift();
                     var newSet = {
-                        "count": newData,
-                        "time": new Date(Date.UTC(newtime.getUTCFullYear(), newtime.getUTCMonth(), newtime.getUTCDate(), newtime.getUTCHours(), newtime.getUTCMinutes(), newtime.getUTCSeconds(), newtime.getUTCMilliseconds())),
-                        
-                    }
-                    // console.log(da)
+                            "count": newData,
+                            "time": new Date(Date.UTC(newtime.getUTCFullYear(), newtime.getUTCMonth(), newtime.getUTCDate(), newtime.getUTCHours(), newtime.getUTCMinutes(), newtime.getUTCSeconds(), newtime.getUTCMilliseconds())),
+
+                        }
+                        // console.log(da)
 
                     $rootScope.dataArray.push(newSet);
 
-                    console.log("newDAta", newData);
-                     var svg = d3.select("body").transition();
+                    // console.log("newDAta", newData);
+                    var svg = d3.select("body").transition();
 
                     // Make the changes
                     svg.select(".line1") // change the line

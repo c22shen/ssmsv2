@@ -7,17 +7,6 @@ angular
             $scope.$apply();
         })
 
-        var initializeStatusData = function() {
-            $http.get('/machines/positions', {
-            }).
-            then(function(res) {
-                $rootScope.statusArray = res.data;
-                $rootScope.statusArray.forEach(function(d){d.status? null: d.status=false});
-            }, function(res) {})
-        }
-        initializeStatusData();
-
-
         var processData = function(machineId, currentValue, currentThreshold) {
             var currentMachineStatus;
             var isMachineOn = function(current_reading, threshold) {
@@ -33,11 +22,11 @@ angular
                 currentMachineStatus = machineDataArray[0].status;
             }
             if (currentMachineStatus !== isMachineOn(currentValue, currentThreshold)) {
-                $http.post('/machines/create', {
-                    machineId: machineId,
-                    status: !currentMachineStatus
-                }).
-                then(function(res) {}, function(res) {})
+                console.log("updateStatus:",machineId,currentMachineStatus);
+                socketio.emit("updateStatus", {
+                    machine_id: machineId,
+                    machine_status: !currentMachineStatus
+                });
 
                 $rootScope.statusArray.forEach(function(data) {
                     if (data.machineId === machineId) {
@@ -45,6 +34,7 @@ angular
                     }
                 })
             };
+            console.log("not different:");
 
         }
 
@@ -87,7 +77,13 @@ angular
                 updateIntervalMsec);
         }
         // createDataTest(2, 2000, 100);
-        socketio.on('updateMachineStatus', function(status) {
+        socketio.on('receiveStatus', function(status) {
+            console.log("socketworks:",status);
             processData(status.machine_id, status.current_value, 10);
+        })
+        socketio.on('initStatus', function(statusData) {
+            console.log("initStatus:",statusData.positions);
+            $rootScope.statusArray = statusData.positions;
+            $rootScope.statusArray.forEach(function(d){d.status? null: d.status=false});
         })
     }])

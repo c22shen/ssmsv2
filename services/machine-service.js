@@ -1,5 +1,6 @@
 var Machine = require('../models/machine').Machine;
 var Position = require('../models/position').Position;
+var mongoose = require('mongoose');
 //     //  0:length
 //     //  1:length
 //     //  2: FrameType
@@ -21,22 +22,19 @@ var Position = require('../models/position').Position;
 //     // 18: Analog Value 
 //     // 19: Analog Value 
 
-exports.storeMachineStatus = function() {
-    return function(req, res, next) {
+exports.storeMachineStatus = function(machine_id, machine_status) {
         var newMachineStatus = new Machine({
-            machineId: req.body.machineId,
-            status: req.body.status
+            machineId: machine_id,
+            status: machine_status
         });
         newMachineStatus.save(function(err) {
             if (err) {
-                return res.send(err);
+                console.log("storeMachineStatus error",err);
             }
-
-            return res.json({
-                message: 'Machine updated!'
-            });
+            else{
+                  console.log("--------machineservice successful");
+            }
         })
-    }
 }
 
 exports.updateMachineStatus = function() {
@@ -74,13 +72,11 @@ exports.storeMachinePosition = function() {
 }
 
 exports.getMachinePositions = function() {
-    return function(req, res, next) {
         Position.find({}, function(err, positions) {
             if (err) {
-                return next(err);
+                console.logs("getMachinePositions",err);
             } else {
-                return res.json(positions);
+                return positions;
             }
         })
-    }
 }

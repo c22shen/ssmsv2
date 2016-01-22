@@ -1,7 +1,7 @@
 'use strict';
 
 angular
-    .module('app')
+    .module('ssms.app')
     .config(config);
 
 function config($stateProvider, $urlRouterProvider) {

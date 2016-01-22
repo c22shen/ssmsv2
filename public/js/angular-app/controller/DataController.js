@@ -1,11 +1,28 @@
 angular
-    .module('app')
+    .module('ssms.app')
     .controller("DataController", ['$rootScope', '$scope', 'socketio', '$interval', '$http', '$window', function($rootScope, $scope, socketio, $interval, $http, $window) {
         'use strict';
+
+
+
         $rootScope.statusArray = [];
         angular.element($window).on('resize', function() {
             $scope.$apply();
         })
+
+        $rootScope.barGraphData = [1,2,3];
+
+        var initializeStatusData = function() {
+            $http.get('/machines/positions', {
+            }).
+            then(function(res) {
+                $rootScope.statusArray = res.data;
+                $rootScope.statusArray.forEach(function(d){d.status? null: d.status=false});
+            }, function(res) {})
+        }
+        initializeStatusData();
+
+
 
         var processData = function(machineId, currentValue, currentThreshold) {
             var currentMachineStatus;

@@ -22,19 +22,40 @@ var mongoose = require('mongoose');
 //     // 18: Analog Value 
 //     // 19: Analog Value 
 
-exports.storeMachineStatus = function(machine_id, machine_status) {
-        var newMachineStatus = new Machine({
-            machineId: machine_id,
-            status: machine_status
-        });
+
+
+var getNewStatus = function(machineId, status) {
+    var newMachineStatus;
+    if (machineId === "lathe1") {
+        newMachineStatus = new Lathe1({
+            machineId: req.body.machineId,
+            status: req.body.status
+        })
+    } else if (machineId === "milling1") {
+        newMachineStatus = new Milling1({
+            machineId: req.body.machineId,
+            status: req.body.status
+        })
+    } else {
+        console.log("ERROR! machineId doesn't match");
+    }
+
+    return newMachineStatus;
+}
+
+exports.storeMachineStatus = function() {
+    return function(req, res, next) {
+
+        var newMachineStatus = getNewStatus(req.body.machineId, req.body.status)
+
         newMachineStatus.save(function(err) {
             if (err) {
-                console.log("storeMachineStatus error",err);
-            }
-            else{
-                  console.log("--------machineservice successful");
+                console.log("storeMachineStatus error", err);
+            } else {
+                console.log("--------machineservice successful");
             }
         })
+    }
 }
 
 exports.updateMachineStatus = function() {
@@ -72,11 +93,11 @@ exports.storeMachinePosition = function() {
 }
 
 exports.getMachinePositions = function() {
-        Position.find({}, function(err, positions) {
-            if (err) {
-                console.logs("getMachinePositions",err);
-            } else {
-                return positions;
-            }
-        })
+    Position.find({}, function(err, positions) {
+        if (err) {
+            console.logs("getMachinePositions", err);
+        } else {
+            return positions;
+        }
+    })
 }

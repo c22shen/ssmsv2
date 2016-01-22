@@ -29,6 +29,8 @@ a {
 .square {
 	width: 250px ;
 	height: 275px;
+	margin: 3em auto;
+	display:block;
 	border: thin solid #838B9B;
 	color:white;
 	background-color:#21C5E8;

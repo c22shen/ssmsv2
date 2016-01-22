@@ -22,7 +22,7 @@ var Position = require('../models/position').Position;
 //     // 19: Analog Value 
 
 
-var getNewStatus = function(machineId, status){
+var getNewStatus = function(machineId, status) {
     var newMachineStatus;
     if (machineId === "lathe1") {
         newMachineStatus = new Lathe1({
@@ -38,15 +38,14 @@ var getNewStatus = function(machineId, status){
         console.log("ERROR! machineId doesn't match");
     }
 
-        return newMachineStatus;
-    }
+    return newMachineStatus;
 }
 
 exports.storeMachineStatus = function() {
     return function(req, res, next) {
 
         var newMachineStatus = getNewStatus(req.body.machineId, req.body.status)
-       
+
         newMachineStatus.save(function(err) {
             if (err) {
                 return res.send(err);

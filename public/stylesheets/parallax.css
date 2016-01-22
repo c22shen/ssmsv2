@@ -27,6 +27,10 @@ section.module p:last-child {
 section.module.content {
   padding: 40px 0;
 }
+
+.topsection {
+  height: 900px
+}
 section.module.parallax {
   height: 650px;
   background-position: 50% 50%;
@@ -45,7 +49,22 @@ section.module.parallax h1 {
 }
 section.module.parallax-1 {
   background-image: url("/images/backgrounddarker.jpg");
+  height: 900px;
 }
+
+@media (max-width: 768px) {
+section.module.parallax-1 {
+  background-image: url("/images/backgrounddarker.jpg");
+  height: 1300px;
+}
+}
+
+.xaxis, .yaxis {
+  fill:white;
+}
+
+
+
 
 /*section.module.parallax-2 {
   background-image: url("/images/labhorizontal.png");

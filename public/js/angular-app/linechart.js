@@ -32,10 +32,13 @@ angular
                         width = w;
                     }
                     svg.attr('width', width);
+                    var outersvg = d3.select(".outersvg");
+                    outersvg.attr('width', width);
                     xScale.range([margins.left, width - margins.right]);
 
                     xAxis = d3.svg.axis().scale(xScale).ticks(d3.time.hour, 3);
                     d3.select('.xaxis').call(xAxis);
+
 
                     redraw();
 
@@ -60,7 +63,7 @@ angular
 
 
                 var width = 1000,
-                    height = 500;
+                    height = 400;
 
                 var margins = {
                     top: 20,
@@ -73,7 +76,7 @@ angular
                 var freeCount = 4;
                 var busyCount = 5;
 
-                var svg_container = d3.select(el).append('svg');
+                var svg_container = d3.select(el).append('svg').classed("outersvg", true);
 
                 var start = new Date("2015-03-25T08:00:00");
                 var end = new Date("2015-03-25T23:00:00");
@@ -178,7 +181,7 @@ angular
                     //     .call(yAxis);
 
 
-                }, 5000)
+                }, 2000)
 
 
 

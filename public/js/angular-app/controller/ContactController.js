@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('app').controller('ContactController', ['$scope', '$http','$rootScope',
+angular.module('ssms.app').controller('ContactController', ['$scope', '$http','$rootScope',
   function ($scope, $http, $rootScope) {
     $scope.sendMailYun = function () {
       $scope.success = $scope.error = null;

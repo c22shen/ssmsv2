@@ -3,14 +3,14 @@
         display: block;
         z-index: 0;
         overflow: hidden;
-        font-size: 10px;
+        font-size: 12px;
     }
     
     piechart {
     	position: relative;
         margin: 0 auto;
-        height: 130px;
-        width: 130px;
+        height: 150px;
+        width: 150px;
         display: block;
         margin-top: 1em;
     }

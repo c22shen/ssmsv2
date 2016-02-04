@@ -12,5 +12,9 @@ function config($stateProvider, $urlRouterProvider) {
             url: "/home",
             templateUrl: "/js/angular-app/tpl/home.html"
                 // controller: '/js/angular-app/controller/HomeController'
+        })
+        .state('about', {
+            url: "#about",
+           
         });
 }

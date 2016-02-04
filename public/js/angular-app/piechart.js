@@ -4,13 +4,13 @@ angular
     function(d3, $rootScope, $window, $interval) {
         function link(scope, el, attr) {
             el = el[0];
-            var width = 130;
-            var height = 130;
+            var width = 150;
+            var height = 150;
             var statusColor = function(label) {
                 if (label === 'Free') {
-                    return "#32FFEB"
+                    return "#09f"
                 } else {
-                    return "#E8A86F"
+                    return "#FFF"
                 }
             }
             var donutWidth = 10;

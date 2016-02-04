@@ -26,11 +26,9 @@ angular
 
 
                 function resize() {
-                    if (w > 1000) {
-                        width = 1000;
-                    } else {
+
                         width = w;
-                    }
+
                     svg.attr('width', width);
                     var outersvg = d3.select(".outersvg");
                     outersvg.attr('width', width);
@@ -68,7 +66,7 @@ angular
                 var margins = {
                     top: 20,
                     right: 20,
-                    bottom: 20,
+                    bottom: 10,
                     left: 50
                 };
 
@@ -97,9 +95,19 @@ angular
                     .scale(yScale);
 
                 var svg = svg_container
-                    .attr('width', width)
-                    .attr('height', height)
+                    .attr('width', width+margins.left+margins.right)
+                    .attr('height', height+margins.top+margins.bottom)
                     .append("g");
+
+
+
+                svg.append("rect")
+                    .attr("width", "100%")
+                    .attr("height", "100%")
+                    .attr("fill", "#333")
+                    .attr("opacity","0.9")
+                    .attr("rx","4")
+                    .attr("ry","4");
 
                 svg.append("svg:g")
                     .attr("class", "axis xaxis")
@@ -128,9 +136,10 @@ angular
                 svg.append('svg:path')
                     .classed('line1', true)
                     .attr('d', lineGen($rootScope.dataArray))
-                    .attr('stroke', '#f39c12')
-                    .attr('stroke-width', 4)
+                    .attr('stroke', '#09f')
+                    .attr('stroke-width', 5)
                     .attr('fill', 'none');
+                    
 
 
 

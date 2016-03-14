@@ -1,0 +1,56 @@
+#include <SPI.h>
+#include <Ethernet.h>
+byte mac[] = {
+  0x00, 0xAA, 0xBB, 0xCC, 0xDE, 0x02
+};
+char server[] = "ssmsv2.herokuapp.com";
+IPAddress ip(192, 168, 1, 15);
+EthernetClient client;
+String serialNumberString;
+unsigned char buf[20];
+int counter = 0;
+
+void setup() {
+  Serial.begin(9600);
+  //Serial.println("This is coordinator");
+  if (Ethernet.begin(mac) == 0) {
+    Ethernet.begin(mac, ip);
+  }
+  Serial.println("Connecting...");
+  while (!client.connected()) {
+    client.connect(server, 80);
+    delay(100);
+  }
+  Serial.println("Connected");
+  while (Serial.available() > 0) {
+    Serial.read();
+  }
+}
+
+void loop() {
+  if (client.connected() && counter != 99) {
+    if (Serial.available() >= 21) {
+      if (Serial.read() == 0x7E) {
+        Serial.readBytes(buf, 20);
+        String webString = "PUT /machines?current_value=" + String(counter) + ":" + String(buf[7], HEX) + String(buf[8], HEX) + String(buf[9], HEX) + String(buf[10], HEX) + ":" + String(buf[18], HEX) + ":" + String(buf[19], HEX) + " HTTP/1.1";
+        client.println(webString);
+        //Serial.println(webString);
+        client.println("HOST: ssmsv2.herokuapp.com");
+        client.println();
+        counter++;
+      }
+    }
+  }
+  else {
+    client.println("Connection: close");
+    client.stop();
+    client.connect(server, 80);
+    //Serial.println("Connecting..");
+    counter = 0;
+    while (Serial.available() > 0) {
+      Serial.read();
+    }
+  }
+}
+
+
